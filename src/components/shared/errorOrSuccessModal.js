@@ -1,6 +1,6 @@
 import React from 'react'
 import {Button,Modal} from 'react-bootstrap'
-import {faCheckCircle } from '@fortawesome/free-solid-svg-icons'
+import {faCheckCircle, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class ErrorOrSuccessModal extends React.Component {
@@ -12,8 +12,12 @@ class ErrorOrSuccessModal extends React.Component {
                 </Modal.Header>
                 <Modal.Body>
                 <div id="mdbody" className="text-center">
+                    {this.props.type==='error' ? 
+                    <FontAwesomeIcon id="verified" icon={faTimes} color={'red'} size={'lg'}/>
+                    :
                     <FontAwesomeIcon id="verified" icon={faCheckCircle} color={'green'} size={'lg'}/>
-                    <h6 className="pt-3">{this.props.body} edfsdf</h6>
+                    }
+                    <h6 className="pt-3">{this.props.body}</h6>
                 </div>
                 </Modal.Body>
                 <Modal.Footer>

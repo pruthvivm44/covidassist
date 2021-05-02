@@ -1,7 +1,9 @@
 import React from 'react';
 import { Row, Container, Col,Button,Form} from 'react-bootstrap'
+import { connect } from 'react-redux'
 import ErrorOrSuccessModal from '../shared/errorOrSuccessModal';
 import {StatesAndDistricts}  from '../shared/statesAndDistricts'
+import { patientRequest } from '../../store/actions/patientRequestAction'
 
 class PatientForm extends React.Component {
     constructor(props){
@@ -13,16 +15,18 @@ class PatientForm extends React.Component {
             covRes:null,
             vacTaken:null,
             patAge:null,
+            patGender:null,
             careTakerName:null,
-            priMobNo:null,
-            secMobNo:null,
-            admittedToHospital:'false',
+            priMobNo:'',
+            secMobNo:'',
+            relWithPat:null,
+            admittedToHospital:'not updated',
             hospName:null,
             hospAddr:null,
             address:null,
             landMark:null,
             city:null,
-            pincode:null,
+            pincode:'',
             stateName:null,
             districtArray:[],
             district:null,
@@ -34,7 +38,9 @@ class PatientForm extends React.Component {
                 heading:null,
                 body:null,
             },
-            coMorbidities:[]
+            coMorbidities:[],
+            symptoms:[],
+            regexp : /^[0-9\b]+$/,
         }
     }
     onPatientNameChange = (e)=>{
@@ -53,14 +59,26 @@ class PatientForm extends React.Component {
         });
     }
     onCovResChange = (e)=>{
-        this.setState({
-            covRes:e.target.value
-        });
+        if(e.target.value==='null'){
+            this.setState({
+                covRes:null
+            });
+        }else{
+            this.setState({
+                covRes:e.target.value
+            });
+        }
     }
     onVacTakenChange=(e)=>{
-        this.setState({
-            vacTaken:e.target.value
-        });
+        if(e.target.value==='null'){
+            this.setState({
+                covRes:null
+            });
+        }else{
+            this.setState({
+                vacTaken:e.target.value
+            });
+        }
     }
     onPatAgeChange = (e)=>{
         if(e.target.value<=0){
@@ -72,9 +90,15 @@ class PatientForm extends React.Component {
         }
     }
     onPatGenderChange = (e)=>{
-        this.setState({
-            patGender:e.target.value
-        });
+        if(e.target.value==='null'){
+            this.setState({
+                patGender:null
+            });
+        }else{
+            this.setState({
+                patGender:e.target.value
+            });
+        }
     }
     oncareTakeNameChange = (e)=>{
         this.setState({
@@ -82,24 +106,32 @@ class PatientForm extends React.Component {
         });
     }
     onPriMobNoChange = (e)=>{
-        this.setState({
-            priMobNo:e.target.value
-        });
+        let telephone = e.target.value;
+        if (telephone === '' || this.state.regexp.test(telephone)) {
+            this.setState({ priMobNo: telephone });
+        }
     }
     onSecMobNoChange = (e)=>{
-        this.setState({
-            secMobNo:e.target.value
-        });
+        let telephone = e.target.value;
+        if (telephone === '' || this.state.regexp.test(telephone)) {
+            this.setState({ secMobNo: telephone });
+        }
     }
     relWithPatChange = (e)=>{
         this.setState({
             relWithPat:e.target.value
         });
     }
-    onAdmittedToHospitalChange = (event) =>{
-        this.setState({
-            admittedToHospital:event.target.value
-        });
+    onAdmittedToHospitalChange = (e) =>{
+        if(e.target.value==='null'){
+            this.setState({
+                admittedToHospital:'not updated'
+            });
+        }else{
+            this.setState({
+                admittedToHospital:e.target.value
+            });
+        }
     }
     onHospNameChange = (e)=>{
         this.setState({
@@ -122,9 +154,13 @@ class PatientForm extends React.Component {
         });
     }
     onPincodeChange = (e)=>{
-        this.setState({
-            pincode:e.target.value
-        });
+        if(e.target.value.length>6){
+            alert('Enter a valid pincode');
+        }else{
+            this.setState({
+                pincode:e.target.value
+            });
+        }
     }
     onAddressChange = (e)=>{
         this.setState({
@@ -138,7 +174,12 @@ class PatientForm extends React.Component {
     }
     toggleErrorOrSuccessModal = ()=>{
         this.setState({
-            toShowErrorOrSuccessModal:!this.state.toShowErrorOrSuccessModal
+            toShowErrorOrSuccessModal:!this.state.toShowErrorOrSuccessModal,
+            type:null,
+            successOrError:{
+                heading:null,
+                body:null,
+            },
         });
     }
     onChangeState = (data)=>{
@@ -168,14 +209,10 @@ class PatientForm extends React.Component {
             });
         }
     }
-    submit = (e)=>{
-        e.preventDefault();
-        console.log(this.state)
-    }
     onCoMorbitiesChange = (e)=>{
         let coMorbiditiesArr = this.state.coMorbidities;
         if(e.target.checked){
-            coMorbiditiesArr.push(e.target.value)
+            coMorbiditiesArr.push(e.target.value);
             this.setState({
                 coMorbidities:coMorbiditiesArr
             });
@@ -187,6 +224,232 @@ class PatientForm extends React.Component {
                 coMorbidities:newcoMorbiditiesArr
             });
         }
+    }
+    onSymptomsCheck = (e)=>{
+        let symptomsArr = this.state.symptoms;
+        if(e.target.checked){
+            symptomsArr.push(e.target.value);
+            this.setState({
+                symptoms:symptomsArr
+            });
+        }else{
+            let newSymtopmsArr = this.state.symptoms.filter(data=>{
+                return data !== e.target.value;
+            });
+            this.setState({
+                symptoms:newSymtopmsArr
+            });
+        }
+    }
+    onChangeService = (e)=>{
+        if(e.target.value==='null'){
+            this.setState({
+                serviceRequired:null,
+            });
+        }else{
+            this.setState({
+                serviceRequired:e.target.value,
+            });
+        }
+    }
+    submit = (e)=>{
+        e.preventDefault();
+        let state = this.state;
+        switch(true){
+            case !state.patientName:
+            this.setState({
+                toShowErrorOrSuccessModal:true,
+                type:'error',
+                successOrError:{
+                    heading:'Required',
+                    body:'Patient Name is Required .',
+                }
+            });
+            break;
+
+            case !state.covRes:
+            this.setState({
+                toShowErrorOrSuccessModal:true,
+                type:'error',
+                successOrError:{
+                    heading:'Required',
+                    body:'Please Select your covid test result or if not done select Not yet Tested .',
+                }
+            });
+            break;
+
+            case !state.patAge:
+                this.setState({
+                    toShowErrorOrSuccessModal:true,
+                    type:'error',
+                    successOrError:{
+                        heading:'Required',
+                        body:'Patient Age is required .',
+                    }
+                });
+            break;
+
+            case !state.patGender:
+                this.setState({
+                    toShowErrorOrSuccessModal:true,
+                    type:'error',
+                    successOrError:{
+                        heading:'Required',
+                        body:'Patient Gender is required .',
+                    }
+                });
+            break;
+
+            case !state.careTakerName:
+                this.setState({
+                    toShowErrorOrSuccessModal:true,
+                    type:'error',
+                    successOrError:{
+                        heading:'Required',
+                        body:'Care taker name is required .',
+                    }
+                });
+            break;
+
+            case state.priMobNo.length!==10:
+                this.setState({
+                    toShowErrorOrSuccessModal:true,
+                    type:'error',
+                    successOrError:{
+                        heading:'Required',
+                        body:'Invalid Primary mobile number.',
+                    }
+                });
+            break;
+
+            case state.admittedToHospital==='not updated':
+                this.setState({
+                    toShowErrorOrSuccessModal:true,
+                    type:'error',
+                    successOrError:{
+                        heading:'Required',
+                        body:'Please Enter whether you are admitted to hospital or not',
+                    }
+                });
+            break;
+
+            case !state.address:
+                this.setState({
+                    toShowErrorOrSuccessModal:true,
+                    type:'error',
+                    successOrError:{
+                        heading:'Required',
+                        body:'Please enter your current address .',
+                    }
+                });
+            break;
+
+            case !state.city:
+                this.setState({
+                    toShowErrorOrSuccessModal:true,
+                    type:'error',
+                    successOrError:{
+                        heading:'Required',
+                        body:'Please enter your current city .',
+                    }
+                });
+            break;
+
+            case state.pincode==='':
+                this.setState({
+                    toShowErrorOrSuccessModal:true,
+                    type:'error',
+                    successOrError:{
+                        heading:'Required',
+                        body:'Please enter your current pincode .',
+                    }
+                });
+            break;
+
+            case state.pincode.length!==6:
+                this.setState({
+                    toShowErrorOrSuccessModal:true,
+                    type:'error',
+                    successOrError:{
+                        heading:'Required',
+                        body:'Invalid Pincode .',
+                    }
+                });
+            break;
+
+            case !state.stateName:
+                this.setState({
+                    toShowErrorOrSuccessModal:true,
+                    type:'error',
+                    successOrError:{
+                        heading:'Required',
+                        body:'Please select your state and district .',
+                    }
+                });
+            break;
+
+            case !state.district:
+                this.setState({
+                    toShowErrorOrSuccessModal:true,
+                    type:'error',
+                    successOrError:{
+                        heading:'Required',
+                        body:'Please select your district .',
+                    }
+                });
+            break;
+
+            case !state.serviceRequired:
+                this.setState({
+                    toShowErrorOrSuccessModal:true,
+                    type:'error',
+                    successOrError:{
+                        heading:'Required',
+                        body:'Please select your required service .',
+                    }
+                });
+            break;
+            default: break;
+        }
+        let data = {
+            requestId:null,
+            srfId:this.state.srf_id,
+            buNumber:this.state.buNo,
+            covidTestResult:this.state.covRes,
+            isVaccinationTaken:this.state.vacTaken,
+            patientDetails:{
+                name:this.state.patientName,
+                gender:this.state.patGender,
+                age:this.state.patAge,
+                symptoms:this.state.symptoms,
+                comorbidities:this.state.coMorbidities
+            },
+            careTakerDetails:{
+                name:this.state.careTakerName,
+                primaryMobile:parseInt(this.state.priMobNo),
+                secondaryMobile:parseInt(this.state.secMobNo),
+                relationWithPatient:this.state.relWithPat
+            },
+            address:{
+                addressLine:this.state.address,
+                landMark:this.state.landMark,
+                city:this.state.city,
+                state:this.state.stateName,
+                district:this.state.district,
+                pin:this.state.pincode
+            },
+            hospitalDetails:{
+                isAdmittedToHospital:this.state.admittedToHospital==='true' ? true : false,
+                hospitalName:this.state.hospName,
+                hospitalAddress:this.state.hospAddr
+            },
+            serviceRequested:this.state.serviceRequired,
+            description:[this.state.description],
+            requestStatus:null,
+            createdAt:null,
+            lastModifiedAt:null
+        }
+        this.props.patientRequest(data);
     }
     render(){
         return(
@@ -225,7 +488,7 @@ class PatientForm extends React.Component {
                                     <option value="null">Choose...</option>
                                     <option value="+ve">+ ve</option>
                                     <option value="-ve">- ve</option>
-                                    <option value="Not Tested">Not Tested</option>
+                                    <option value="Not Tested">Not yet Tested</option>
                                 </Form.Control>
                             </Form.Group>
                         </Col>
@@ -277,7 +540,7 @@ class PatientForm extends React.Component {
                         <Col md={4}>
                             <Form.Group controlId="priMobileNo">
                                 <Form.Label>Primary Mobile Number</Form.Label>
-                                <Form.Control type="number" placeholder="Primary Mobile Number" onChange={this.onPriMobNoChange}/>
+                                <Form.Control value={this.state.priMobNo} type="number" placeholder="Primary Mobile Number" onChange={this.onPriMobNoChange} maxLength={10}/>
                             </Form.Group>
                         </Col>
                     </Row>
@@ -285,7 +548,7 @@ class PatientForm extends React.Component {
                         <Col md={4}>
                             <Form.Group controlId="secMobileNo">
                                 <Form.Label>Secondary Mobile Number</Form.Label>
-                                <Form.Control type="text" placeholder="Secondary Mobile Number" onChange={this.onSecMobNoChange} />
+                                <Form.Control type="number" value={this.state.secMobNo} placeholder="Secondary Mobile Number" onChange={this.onSecMobNoChange} maxLength={10} />
                             </Form.Group>
                         </Col>
                         <Col md={4}>
@@ -302,7 +565,7 @@ class PatientForm extends React.Component {
                                     className="mr-sm-2"
                                     custom
                                     onChange={this.onAdmittedToHospitalChange}>
-                                    <option value="0">Choose...</option>
+                                    <option value="null">Choose...</option>
                                     <option value={'true'}>Yes</option>
                                     <option value={'false'}>No</option>
                                 </Form.Control>
@@ -350,7 +613,7 @@ class PatientForm extends React.Component {
                         <Col md={4}>
                             <Form.Group controlId="pincode">
                                 <Form.Label>Pincode</Form.Label>
-                                <Form.Control type="text" placeholder="Pincode" onChange={this.onPincodeChange} />
+                                <Form.Control type="number" value={this.state.pincode} placeholder="Pincode" onChange={this.onPincodeChange} />
                             </Form.Group>
                         </Col>
                     </Row>
@@ -413,6 +676,19 @@ class PatientForm extends React.Component {
                     </Row>
                     <Row>
                         <Col md={12}>
+                            <Form.Group controlId="symptoms">
+                                <Form.Label>Symptoms ?</Form.Label>
+                                <Form.Check inline label="Fever" type={'checkbox'} id={`inline-type-symp-1`} value={'Fever'} className="ml-3" onChange={this.onSymptomsCheck} />
+                                <Form.Check inline label="Dry cough" type={'checkbox'} id={`inline-type-symp-2`} value={'Dry cough'} className="ml-3" onChange={this.onSymptomsCheck} />
+                                <Form.Check inline label="Tiredness" type={'checkbox'} id={`inline-type-symp-3`} value={'tiredness'} className="ml-3" onChange={this.onSymptomsCheck} />
+                                <Form.Check inline label="Difficulty breathing or shortness of breath" type={'checkbox'} id={`inline-type-symp-4`} value={'Difficulty breathing or shortness of breath'} className="ml-3" onChange={this.onSymptomsCheck} />
+                                <Form.Check inline label="Chest pain or pressure" type={'checkbox'} id={`inline-type-symp-5`} value={'C pain or pressure'} className="ml-3" onChange={this.onSymptomsCheck} />
+                                <Form.Check inline label="Loss of speech or movement" type={'checkbox'} id={`inline-type-symp-6`} value={'Loss of speech or movement'} className="ml-3" onChange={this.onSymptomsCheck} />
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={12}>
                             <Form.Group controlId="bpAndSugar">
                                 <Form.Label>I am already suffering with </Form.Label>
                                 <Form.Check inline label="BP" type={'checkbox'} id={`inline-type-1`} value={'BP'} className="ml-3" onChange={this.onCoMorbitiesChange} />
@@ -433,9 +709,21 @@ class PatientForm extends React.Component {
                     </Button>
                 </Form>
                 {this.state.toShowErrorOrSuccessModal ? 
-                 <ErrorOrSuccessModal open={this.state.toShowErrorOrSuccessModal} heading={this.state.successOrError.heading} body={this.state.successOrError.body} handleClose={this.toggleErrorOrSuccessModal}/>:null}
+                 <ErrorOrSuccessModal type={this.state.type} open={this.state.toShowErrorOrSuccessModal} heading={this.state.successOrError.heading} body={this.state.successOrError.body} handleClose={this.toggleErrorOrSuccessModal}/>:null}
             </Container>
         )
     }
 }
-export default PatientForm;
+const mapStateToProps = (state) => {
+    return{
+        patientRequestValue:state.patient.patientRequest
+    }
+}
+
+// dispatch the action or call the functions of auth
+const mapDispatchToProps = (dispatch) =>{
+    return {
+        patientRequest:(creds) => dispatch(patientRequest(creds)),
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(PatientForm);

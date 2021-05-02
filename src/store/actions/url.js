@@ -1,0 +1,1 @@
+export const getUrl = 'https://waterductservices.xyz/';
