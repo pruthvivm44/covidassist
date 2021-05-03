@@ -14,7 +14,7 @@ export const patientRequest = (credentials) =>{
         dispatch({type:'SHOW_PATIENT_LOADING'});
         axios({
             method: 'put',
-            url: url+'patient/patient-request',
+            url: url+'patient/request',
             data:credentials,
             headers: {
                 'content-type': 'application/json'
@@ -27,5 +27,11 @@ export const patientRequest = (credentials) =>{
                 //handle error
                 dispatch({type:'ERROR_ADDING_PATIENT_REQUEST',error});
             });
+    }
+}
+
+export const closePatientReqModal = ()=>{
+    return (dispatch)=>{
+        dispatch({type:'CLOSE_PATIENT_REQUESTED_SUCCESS_MODAL'});
     }
 }

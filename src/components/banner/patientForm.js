@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import ErrorOrSuccessModal from '../shared/errorOrSuccessModal';
 import {StatesAndDistricts}  from '../shared/statesAndDistricts'
 import { patientRequest } from '../../store/actions/patientRequestAction'
+import { closePatientReqModal } from '../../store/actions/patientRequestAction'
 
 class PatientForm extends React.Component {
     constructor(props){
@@ -181,6 +182,9 @@ class PatientForm extends React.Component {
                 body:null,
             },
         });
+    }
+    closeSuccessReqModal = () =>{
+        this.props.closePatientReqModal();
     }
     onChangeState = (data)=>{
         if(data.target.value==='null'){
@@ -710,13 +714,18 @@ class PatientForm extends React.Component {
                 </Form>
                 {this.state.toShowErrorOrSuccessModal ? 
                  <ErrorOrSuccessModal type={this.state.type} open={this.state.toShowErrorOrSuccessModal} heading={this.state.successOrError.heading} body={this.state.successOrError.body} handleClose={this.toggleErrorOrSuccessModal}/>:null}
+                {this.props.patientRequestValue ? 
+                 <ErrorOrSuccessModal type={this.props.type} open={this.props.patientRequestValue} heading={this.props.successOrError.heading} body={this.props.successOrError.body} handleClose={this.closeSuccessReqModal}/>:null}
+            
             </Container>
         )
     }
 }
 const mapStateToProps = (state) => {
     return{
-        patientRequestValue:state.patient.patientRequest
+        patientRequestValue:state.patient.patientRequest,
+        type:state.patient.type,
+        successOrError:state.patient.successOrError
     }
 }
 
@@ -724,6 +733,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) =>{
     return {
         patientRequest:(creds) => dispatch(patientRequest(creds)),
+        closePatientReqModal:() => dispatch(closePatientReqModal())
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(PatientForm);

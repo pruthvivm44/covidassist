@@ -1,14 +1,30 @@
 const initState = {
     loading:false,
     patientRequest:false,
-    error:null
+    error:null,
+    type:null,
+    successOrError:{
+        heading:null,
+        body:null,
+    },
 }
 
 const PatientReducer = (state = initState,action) => {
     switch(action.type){
 
         case 'PATIENT_REQUESTED':
-        return {...state,patientRequest:true}
+        let successOrErrorNew = {
+            heading:'Request placed',
+            body:'Your Request has been registered with us our volunteer will be contacting you soon .'
+        }
+        return {...state,patientRequest:true,type:'success',successOrError:successOrErrorNew}
+
+        case 'CLOSE_PATIENT_REQUESTED_SUCCESS_MODAL':
+        let successOrErrorNew1 = {
+            heading:null,
+            body:null
+        }
+        return {...state,patientRequest:false,type:null,successOrError:successOrErrorNew1}
 
         case 'SHOW_PATIENT_LOADING':
         return {...state,loading:true}
