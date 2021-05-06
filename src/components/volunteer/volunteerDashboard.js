@@ -36,7 +36,6 @@ class VolunteerDashboard extends React.Component {
         }
     }
     componentDidMount(){
-        console.log(localStorage.getItem('volunteerPh'))
         this.props.getVolunteerById(this.props.auth.uid);
     }
     onFirstNameChange = (e)=>{

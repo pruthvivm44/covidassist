@@ -8,6 +8,12 @@ const initState = {
         heading:null,
         body:null,
     },
+    cases:{
+        activeCases:null,
+        gotActiveCases:false,
+        allCases:null,
+        gotAllCases:false
+    }
 }
 
 const VolunteerReducer = (state = initState,action) => {
@@ -21,6 +27,15 @@ const VolunteerReducer = (state = initState,action) => {
 
         case 'VOLUNTEER_REGISTERED':
         return {...state,volunteerData:action.payload}
+
+        case 'GOT_ALL_CASES':
+        let oldCases = state.cases;
+        let newCases = {
+            ...oldCases,
+            allCases:action.payload,
+            gotAllCases:true
+        }
+        return {...state,cases:newCases}
 
         case 'SHOW_VOLUNTEER_LOADING':
         return {...state,loading:true}
