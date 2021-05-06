@@ -1,7 +1,7 @@
 const initState = {
     loading:false,
     volunteerRequested:false,
-    volunteerData :[],
+    volunteerData:null,
     error:null,
     type:null,
     successOrError:{
@@ -14,13 +14,19 @@ const VolunteerReducer = (state = initState,action) => {
     switch(action.type){
 
         case 'GOT_VOLUNTEER_DETAILS':
-        return {...state,volunteerRequested:false,volunteerData:action.payload}
+        return {...state,volunteerRequested:true,volunteerData:action.payload}
+
+        case 'VOLUNTEER_NOT_FOUND':
+        return {...state,volunteerRequested:true,volunteerData:null}
+
+        case 'VOLUNTEER_REGISTERED':
+        return {...state}
 
         case 'SHOW_VOLUNTEER_LOADING':
-            return {...state,loading:true}
+        return {...state,loading:true}
         
         case 'CLOSE_VOLUNTEER_LOADING':
-            return {...state,loading:false}
+        return {...state,loading:false}
 
         default:
         return {...state}

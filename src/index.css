@@ -22,13 +22,13 @@ code {
 }
 
 .black{
-  color: #000;
+  color: #000 !important;
   font-weight:bold !important;
 }
 .hoverred:hover{
-  color:#E9002F;
-  transition: 0.5s;
-  text-decoration:none;
+  color:#E9002F !important;
+  transition: 0.5s !important;
+  text-decoration:none !important;
 }
 .red{
   color:#E9002F;
@@ -36,4 +36,31 @@ code {
 .patientRequestText{
   color: #E9002F;
   font-weight: 700 !important;
+}
+#basic-nav-dropdown{
+  color: #000 !important;
+  font-weight:bold !important;
+}
+#basic-nav-dropdown:hover{
+  color:#E9002F !important;
+  transition: 0.5s !important;
+  text-decoration:none !important;
+}
+.pinkBorder{
+  border-top: 2px solid #E9002F ;
+  width: 80px;
+}
+.posAbsolute{
+  position: absolute !important;
+}
+.modalTransparentBack{
+  background-color: transparent !important;
+}
+.redBack{
+  background-color:#E9002F !important;
+
+}
+.transparent{
+  opacity: 50 !important;
+  background-color:transparent !important;
 }

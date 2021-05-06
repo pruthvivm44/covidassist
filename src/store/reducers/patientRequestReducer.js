@@ -17,7 +17,7 @@ const PatientReducer = (state = initState,action) => {
             heading:'Request placed',
             body:'Your Request has been registered with us our volunteer will be contacting you soon .'
         }
-        return {...state,patientRequest:true,type:'success',successOrError:successOrErrorNew}
+        return {...state,patientRequest:true,type:'success',successOrError:successOrErrorNew,loading:false}
 
         case 'CLOSE_PATIENT_REQUESTED_SUCCESS_MODAL':
         let successOrErrorNew1 = {
@@ -30,7 +30,7 @@ const PatientReducer = (state = initState,action) => {
         return {...state,loading:true}
 
         case 'ERROR_ADDING_PATIENT_REQUEST':
-        return {...state,error:action.payload}
+        return {...state,error:action.payload,loading:false}
 
         default:
         return {...state}
