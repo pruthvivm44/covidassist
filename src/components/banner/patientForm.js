@@ -5,6 +5,7 @@ import ErrorOrSuccessModal from '../shared/errorOrSuccessModal';
 import {StatesAndDistricts}  from '../shared/statesAndDistricts'
 import { patientRequest } from '../../store/actions/patientRequestAction'
 import { closePatientReqModal } from '../../store/actions/patientRequestAction'
+import ActivityIndicator from '../shared/activityIndicator';
 
 class PatientForm extends React.Component {
     constructor(props){
@@ -716,7 +717,8 @@ class PatientForm extends React.Component {
                  <ErrorOrSuccessModal type={this.state.type} open={this.state.toShowErrorOrSuccessModal} heading={this.state.successOrError.heading} body={this.state.successOrError.body} handleClose={this.toggleErrorOrSuccessModal}/>:null}
                 {this.props.patientRequestValue ? 
                  <ErrorOrSuccessModal type={this.props.type} open={this.props.patientRequestValue} heading={this.props.successOrError.heading} body={this.props.successOrError.body} handleClose={this.closeSuccessReqModal}/>:null}
-            
+                {this.props.loading ?
+                <ActivityIndicator />:null}
             </Container>
         )
     }
@@ -725,7 +727,8 @@ const mapStateToProps = (state) => {
     return{
         patientRequestValue:state.patient.patientRequest,
         type:state.patient.type,
-        successOrError:state.patient.successOrError
+        successOrError:state.patient.successOrError,
+        loading:state.patient.loading
     }
 }
 
