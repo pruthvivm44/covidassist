@@ -6,6 +6,7 @@ import { registerVolunteer } from '../../store/actions/volunteerAction.js'
 import {StatesAndDistricts}  from '../shared/statesAndDistricts'
 import ErrorOrSuccessModal from '../shared/errorOrSuccessModal';
 import VolunteerConnectDashboard from './volunteerConnectDashboard.js';
+import Loading from '../Loading.js';
 
 class VolunteerDashboard extends React.Component {
     constructor(props){
@@ -414,7 +415,13 @@ class VolunteerDashboard extends React.Component {
 
         }else{
             return(
-            <h1>loading ...</h1>
+                <Container >
+                    <Row className="posAbsolute">
+                        <Col md={12}>
+                            <Loading />
+                        </Col>
+                    </Row>
+                </Container>
             )
         }
       

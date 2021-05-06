@@ -8,13 +8,13 @@ const authReducer = (state = initState,action) => {
     switch(action.type){
 
         case 'OTP_REQUESTED' :
-            return { ...state,authStatus:'OTP Requested',authConfirmation:action.data}
+            return { ...state,authStatus:'OTP Requested',authConfirmation:action.data,loading:false}
 
         case 'SMS_NOT_SENT' :
             return {...state,authStatus:'Sms not sent'}
 
         case 'SIGNIN_SUCCESSFULL' :
-            return {...state,authStatus:''}
+            return {...state,authStatus:'',loading:false}
 
         case 'OTP_INCORRECT' :
             return {...state,authStatus:'OTP Incorrect'}

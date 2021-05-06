@@ -10,7 +10,7 @@ const Loading = (props) => {
             <Col md={12} className="firstloadcol my-auto">
               <div className="">
                 <Spinner className="loading" animation="grow" variant="danger"/>
-                <h1 className="mt-3">Loading...!</h1>
+                <h1 className="mt-3">Hold on...!</h1>
               </div>
             </Col>
           </Row>
