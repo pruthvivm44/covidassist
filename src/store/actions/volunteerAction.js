@@ -16,6 +16,13 @@ export const volunteerRegistered = data => {
     };
 }
 
+export const gotAllCases = data =>{
+    return {
+        type:'GOT_ALL_CASES',
+        payload:data
+      };
+}
+
 export const getVolunteerById = (credentials) =>{
     return (dispatch,getState)=>{
         dispatch({type:'SHOW_VOLUNTEER_LOADING'});
@@ -58,6 +65,47 @@ export const registerVolunteer = (credentials) =>{
             })
             .catch(function (error) {
                 dispatch({type:'ERROR_REGISTERING_VOLUNTEER',error});
+            });
+    }
+}
+
+export const getAllCases = (credentials) =>{
+    return (dispatch,getState)=>{
+        dispatch({type:'SHOW_VOLUNTEER_LOADING'});
+        axios({
+            method: 'GET',
+            url: url+'patient/request/findAll/',
+            headers: {
+                'content-type': 'application/json'
+            }
+            })
+            .then(function (response) {
+                dispatch(gotAllCases(response.data))
+            })
+            .catch(function (error) {
+                dispatch({type:'ERROR_FETCHING_REQUESTS',error});
+            });
+    }
+}
+
+export const getCasesByVolunteerId = (credentials) =>{
+    return (dispatch,getState)=>{
+        dispatch({type:'SHOW_VOLUNTEER_LOADING'});
+        axios({
+            method: 'GET',
+            url: url+'patient/request/findAll/',
+            params: {
+                volunteerId:credentials,
+            },
+            headers: {
+                'content-type': 'application/json'
+            }
+            })
+            .then(function (response) {
+                console.log(response.data)
+            })
+            .catch(function (error) {
+                dispatch({type:'ERROR_FETCHING_REQUESTS',error});
             });
     }
 }
