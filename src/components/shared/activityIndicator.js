@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Container, Col,Spinner,Modal,Button} from 'react-bootstrap'
+import { Row, Container, Col,Spinner,Modal} from 'react-bootstrap'
 
 const ActivityIndicator = (props) => {
     return(
@@ -10,7 +10,7 @@ const ActivityIndicator = (props) => {
                         <Col md={12} className="">
                             <div className="">
                                 <Spinner className="loading" animation="grow" variant="danger"/>
-                                <h4 className="pt-3 pl-2 pr-2">Loading...!</h4>
+                                <h4 className="pt-3 pl-2 pr-2">Hold on...!</h4>
                             </div>
                         </Col>
                     </Row>

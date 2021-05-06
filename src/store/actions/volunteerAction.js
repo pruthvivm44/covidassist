@@ -52,7 +52,9 @@ export const registerVolunteer = (credentials) =>{
             }
             })
             .then(function (response) {
-                dispatch(volunteerRegistered(response.data));
+                let volArr = [];
+                volArr.push(credentials);
+                dispatch(volunteerRegistered(credentials));
             })
             .catch(function (error) {
                 dispatch({type:'ERROR_REGISTERING_VOLUNTEER',error});

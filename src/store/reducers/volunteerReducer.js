@@ -20,7 +20,7 @@ const VolunteerReducer = (state = initState,action) => {
         return {...state,volunteerRequested:true,volunteerData:null}
 
         case 'VOLUNTEER_REGISTERED':
-        return {...state}
+        return {...state,volunteerData:action.payload}
 
         case 'SHOW_VOLUNTEER_LOADING':
         return {...state,loading:true}

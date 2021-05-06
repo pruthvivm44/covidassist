@@ -51,10 +51,13 @@ code {
   width: 80px;
 }
 .posAbsolute{
-  position: absolute !important;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
 }
+
 .modalTransparentBack{
-  background-color: transparent !important;
+  background-color:rgb(252, 119, 146)arent !important;
 }
 .redBack{
   background-color:#E9002F !important;

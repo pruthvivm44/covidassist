@@ -8,7 +8,6 @@ export const signIn = (credentials) =>{
         .then(function (confirmationResult) {
             localStorage.setItem('volunteerPh', credentials.phno);
             console.log('otp requested')
-            dispatch({type:'CLOSE_AUTH_LOADING'});
             dispatch({type:'OTP_REQUESTED',data:confirmationResult});
         }).catch(function (error) {
             dispatch({type:'CLOSE_AUTH_LOADING'});

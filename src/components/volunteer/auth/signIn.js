@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Container, Col,Button,Form,Card,Alert} from 'react-bootstrap'
+import { Row, Container, Col,Button,Form,Card,Alert,Spinner} from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { signIn } from '../../../store/actions/authAction'
 import { confirmCode } from '../../../store/actions/authAction'
@@ -55,7 +55,6 @@ class SignIn extends React.Component {
     }
     confirmCode = (event) =>{
         event.preventDefault();
-        console.log(' i am heer')
         if(this.state.otp.length===6){
            this.props.confirmCode(this.state.otp);
         }else{
@@ -69,14 +68,15 @@ class SignIn extends React.Component {
             <Container>
                 <Row>
                     <Col md={12} className="mt-3 mb-3">
-                        <h4>VOLUNTEER REGISTRATION</h4>
+                        <h4>VOLUNTEER LOGIN</h4>
+                        <div className="pinkBorder"></div>
                     </Col>
                 </Row>
                 <Row>
                     <Col md={6}>
                         <Card className="p-5">
                             <div  className="text-center">
-                                <h3>SIGN IN NOW</h3>
+                                <h3>LOGIN NOW</h3>
                             </div>
                             <Form.Group controlId="priMobileNo" className="mt-3">
                                 <Form.Control value={this.state.telephone} type="number" placeholder="Mobile Number" onChange={this.onHandleTelephoneChange} maxLength={10}/>
@@ -86,10 +86,10 @@ class SignIn extends React.Component {
                               <Form.Group controlId="otp">
                                     <Form.Control maxLength="6" name="otp" value={this.state.otp} onChange={this.otpChange} placeholder="Enter Your OTP" aria-label="mobnumber" aria-describedby="basic-addon1"/>
                                 </Form.Group>
-                                <Button variant="danger" type="submit" onClick={this.confirmCode}>Submit OTP</Button>
+                                <Button disabled={this.props.loading} variant="danger" type="submit" onClick={this.confirmCode}>Submit OTP</Button>
                             </>:
                             <>
-                                <Button variant="danger" type="submit" onClick={this.requestOTP}>Request OTP</Button>
+                                <Button disabled={this.props.loading} variant="danger" type="submit" onClick={this.requestOTP}>Request OTP</Button>
                             </>
                             }
                             {this.props.authStatus==='SMS_NOT_SENT'?
@@ -110,6 +110,17 @@ class SignIn extends React.Component {
                             :
                             null
                             }
+                            {this.props.loading ? 
+                                <Container>
+                                    <Row >
+                                        <Col md={12}>
+                                            <div className="text-center mt-4">
+                                                <Spinner className="loading" animation="grow" variant="danger"/>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                            </Container>
+                            :null}
                           
                         </Card>
                     </Col>

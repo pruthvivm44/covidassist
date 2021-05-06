@@ -4,7 +4,7 @@ import { Container,Row,Col,Jumbotron,Button,Tab,Tabs,Table } from 'react-bootstr
 class VolunteerConnectDashboard extends React.Component {
     render(){
         return(
-            <Container>
+            <Container fluid>
                 <Row>
                     <Col md={12}>
                         <Jumbotron className="pt-4 pb-4">
