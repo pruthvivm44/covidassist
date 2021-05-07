@@ -10,14 +10,14 @@ class ErrorOrSuccessModal extends React.Component {
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">{this.props.heading}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className="pb-0">
                 <div id="mdbody" className="text-center">
                     {this.props.type==='error' ? 
                     <FontAwesomeIcon id="verified" icon={faTimes} color={'red'} size={'lg'}/>
                     :
                     <FontAwesomeIcon id="verified" icon={faCheckCircle} color={'green'} size={'lg'}/>
                     }
-                    <h6 className="pt-3">{this.props.body}</h6>
+                    <h6 className="mt-3">{this.props.body}</h6>
                 </div>
                 </Modal.Body>
                 <Modal.Footer>

@@ -23,6 +23,20 @@ export const gotAllCases = data =>{
       };
 }
 
+export const requestAssignedForVolunteer = data =>{
+    return{
+        type : 'VOLUNTEER_REQUEST_ASSIGNED',
+        payload :data
+    }
+}
+
+export const gotAssignedCase =  data =>{
+    return {
+        type:'GOT_ASSIGNED_CASES',
+        payload:data
+      };
+}
+
 export const getVolunteerById = (credentials) =>{
     return (dispatch,getState)=>{
         dispatch({type:'SHOW_VOLUNTEER_LOADING'});
@@ -71,7 +85,6 @@ export const registerVolunteer = (credentials) =>{
 
 export const getAllCases = (credentials) =>{
     return (dispatch,getState)=>{
-        dispatch({type:'SHOW_VOLUNTEER_LOADING'});
         axios({
             method: 'GET',
             url: url+'patient/request/findAll/',
@@ -102,10 +115,41 @@ export const getCasesByVolunteerId = (credentials) =>{
             }
             })
             .then(function (response) {
-                console.log(response.data)
+                dispatch(gotAssignedCase(response.data))
             })
             .catch(function (error) {
                 dispatch({type:'ERROR_FETCHING_REQUESTS',error});
             });
+    }
+}
+
+export const assignRequest = (credentials) =>{
+    return (dispatch,getState)=>{
+        dispatch({type:'SHOW_VOLUNTEER_LOADING'});
+        axios({
+            method: 'PUT',
+            url: url+'patient/assign/'+credentials.requestId,
+            params: {
+                volunteerId:credentials.volunteerId,
+            },
+            headers: {
+                'content-type': 'application/json'
+            }
+            })
+            .then(function (response) {
+                let data = {
+                    requestId:credentials.requestId,
+                    volunteerId:credentials.volunteerId
+                };
+                dispatch(requestAssignedForVolunteer(data));
+            })
+            .catch(function (error) {
+                dispatch({type:'ERROR_ASSIGNING_REQUEST',error});
+            });
+    }
+}
+export const makeRequestAssignedFalse = (credentials) =>{
+    return (dispatch)=>{
+        dispatch({type:'MAKE_REQUEST_ASSIGNED_FALSE'});
     }
 }
