@@ -2,18 +2,32 @@ import React from 'react';
 import {Table,Container,Row,Col } from 'react-bootstrap';
 import { connect } from 'react-redux'
 import { getAllCases } from '../../store/actions/volunteerAction'
+import { assignRequest } from '../../store/actions/volunteerAction'
 import Loading from '../Loading';
+import ErrorOrSuccessModal from '../shared/errorOrSuccessModal';
 import AllCasesRow from './allCasesRow';
+import { makeRequestAssignedFalse } from '../../store/actions/volunteerAction'
 
 class AllCases extends React.Component {
     componentDidMount(){
         this.props.getAllCases();
     }
+    assignNow = (requestId)=>{
+        let data = {
+            requestId:requestId,
+            volunteerId:this.props.auth.uid
+        };
+        this.props.assignRequest(data);
+    }
+    closeSuccessReqModal = () =>{
+        this.props.makeRequestAssignedFalse();
+    }
     render(){
-        console.log(this.props.allCases);
+        console.log('All Cases :',this.props.allCases)
         if(this.props.allCases){
             if(this.props.allCases.content.length===0){
                 return(
+                    <>
                     <Container>
                         <Row className="p-5">
                             <Col md={12} className="text-center">
@@ -21,29 +35,41 @@ class AllCases extends React.Component {
                             </Col>
                         </Row>
                     </Container>
+                    {this.props.requestAssigned ?
+                        <ErrorOrSuccessModal type={'success'} open={this.props.requestAssigned} heading={'Request Assigned'} body={'Thank you for Assigning the request .'} handleClose={this.closeSuccessReqModal}/>
+                    :null}
+                    </>
                 )
             }else{
                 return(
+                    <>
                     <Table striped bordered hover>
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Patient Name</th>
+                                <th >Sevice Required</th>
                                 <th>District</th>
                                 <th>State</th>
-                                <th >Sevice Required</th>
                                 <th className="text-center">Updated at</th>
                                 <th className="text-center">Status</th>
                                 <th className="text-center">Assign</th>
                             </tr>                
                         </thead>
                         <tbody>
-                            {this.props.allCases.content.map((data,i) =>(
-                                <AllCasesRow data={data} key={i}/>
-                            ))}
+                            {this.props.allCases.content.map((data,i) =>{
+                                if(data.currentStatus==='OPEN' || data.currentStatus==='UNASSIGNED'){
+                                    return(
+                                        <AllCasesRow data={data}  key={i} assignNow={this.assignNow} />
+                                    )
+                                }
+                            })}
                         </tbody>
                     </Table>                              
-        
+                    {this.props.requestAssigned ?
+                        <ErrorOrSuccessModal type={'success'} open={this.props.requestAssigned} heading={'Request Assigned'} body={'Thank you for Assigning the request .'} handleClose={this.closeSuccessReqModal}/>
+                    :null}
+                    </>
                 )
             }
         }else{
@@ -63,7 +89,9 @@ class AllCases extends React.Component {
 const mapStateToProps = (state) => {
     return{
         auth : state.firebase.auth,
-        allCases : state.volunteer.cases.allCases
+        allCases : state.volunteer.cases.allCases,
+        requestAssigned : state.volunteer.requestAssigned,
+        loading:state.volunteer.loading
     }
 }
 
@@ -71,6 +99,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) =>{
     return {
         getAllCases:() => dispatch(getAllCases()),
+        assignRequest:(creds) => dispatch(assignRequest(creds)),
+        makeRequestAssignedFalse:() => dispatch(makeRequestAssignedFalse()),
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(AllCases);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container,Row,Col,Jumbotron,Button,Tab,Tabs } from 'react-bootstrap';
-import ActiveCases from './activeCases';
+import AssignedCases from './assignedCases';
 import AllCases from './allCases';
 
 class VolunteerConnectDashboard extends React.Component {
@@ -18,9 +18,9 @@ class VolunteerConnectDashboard extends React.Component {
                 </Row>
                 <Row>
                     <Col md={12}>
-                        <Tabs defaultActiveKey="All Cases" id="uncontrolled-tab-example">
+                        <Tabs defaultActiveKey="Assigned Cases" id="uncontrolled-tab-example">
                             <Tab eventKey="Assigned Cases" title="Assigned Cases" tabClassName="black hoverred">
-                                <ActiveCases />
+                                <AssignedCases />
                             </Tab>
                             <Tab eventKey="All Cases" title="All Cases" tabClassName="black hoverred">
                                 <AllCases />

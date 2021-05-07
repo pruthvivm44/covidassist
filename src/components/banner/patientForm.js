@@ -414,47 +414,48 @@ class PatientForm extends React.Component {
                     }
                 });
             break;
-            default: break;
+            default: 
+            let data = {
+                requestId:null,
+                srfId:this.state.srf_id,
+                buNumber:this.state.buNo,
+                covidTestResult:this.state.covRes,
+                isVaccinationTaken:this.state.vacTaken,
+                patientDetails:{
+                    name:this.state.patientName,
+                    gender:this.state.patGender,
+                    age:this.state.patAge,
+                    symptoms:this.state.symptoms,
+                    comorbidities:this.state.coMorbidities
+                },
+                careTakerDetails:{
+                    name:this.state.careTakerName,
+                    primaryMobile:parseInt(this.state.priMobNo),
+                    secondaryMobile:parseInt(this.state.secMobNo),
+                    relationWithPatient:this.state.relWithPat
+                },
+                address:{
+                    addressLine:this.state.address,
+                    landMark:this.state.landMark,
+                    city:this.state.city,
+                    state:this.state.stateName,
+                    district:this.state.district,
+                    pin:this.state.pincode
+                },
+                hospitalDetails:{
+                    isAdmittedToHospital:this.state.admittedToHospital==='true' ? true : false,
+                    hospitalName:this.state.hospName,
+                    hospitalAddress:this.state.hospAddr
+                },
+                serviceRequested:this.state.serviceRequired,
+                description:[this.state.description],
+                requestStatus:null,
+                createdAt:null,
+                lastModifiedAt:null
+            }
+            this.props.patientRequest(data);
+            break;
         }
-        let data = {
-            requestId:null,
-            srfId:this.state.srf_id,
-            buNumber:this.state.buNo,
-            covidTestResult:this.state.covRes,
-            isVaccinationTaken:this.state.vacTaken,
-            patientDetails:{
-                name:this.state.patientName,
-                gender:this.state.patGender,
-                age:this.state.patAge,
-                symptoms:this.state.symptoms,
-                comorbidities:this.state.coMorbidities
-            },
-            careTakerDetails:{
-                name:this.state.careTakerName,
-                primaryMobile:parseInt(this.state.priMobNo),
-                secondaryMobile:parseInt(this.state.secMobNo),
-                relationWithPatient:this.state.relWithPat
-            },
-            address:{
-                addressLine:this.state.address,
-                landMark:this.state.landMark,
-                city:this.state.city,
-                state:this.state.stateName,
-                district:this.state.district,
-                pin:this.state.pincode
-            },
-            hospitalDetails:{
-                isAdmittedToHospital:this.state.admittedToHospital==='true' ? true : false,
-                hospitalName:this.state.hospName,
-                hospitalAddress:this.state.hospAddr
-            },
-            serviceRequested:this.state.serviceRequired,
-            description:[this.state.description],
-            requestStatus:null,
-            createdAt:null,
-            lastModifiedAt:null
-        }
-        this.props.patientRequest(data);
     }
     render(){
         return(
