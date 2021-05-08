@@ -18,7 +18,6 @@ class AssignedCases extends React.Component {
         this.props.assignRequest(data);
     }
     render(){
-        console.log('Assigned Cases :',this.props.assignedCases)
         if(this.props.assignedCases){
             if(this.props.assignedCases.content.length===0){
                 return(
