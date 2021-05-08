@@ -23,7 +23,6 @@ class AllCases extends React.Component {
         this.props.makeRequestAssignedFalse();
     }
     render(){
-        console.log('All Cases :',this.props.allCases)
         if(this.props.allCases){
             if(this.props.allCases.content.length===0){
                 return(
@@ -62,6 +61,8 @@ class AllCases extends React.Component {
                                     return(
                                         <AllCasesRow data={data}  key={i} assignNow={this.assignNow} />
                                     )
+                                }else{
+                                    return (null)
                                 }
                             })}
                         </tbody>
