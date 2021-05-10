@@ -14,7 +14,19 @@ const initState = {
         allCases:null,
         gotAllCases:false
     },
-    requestAssigned:false
+    requestAssigned:false,
+    requestUnAssigned:false,
+    allCasesPagination:{
+        currentPageNumber:null,
+        pageSize:null,
+        totalPages:null,
+    },
+    assignedCasesPagination:{
+        currentPageNumber:null,
+        pageSize:null,
+        totalPages:null,
+
+    }
 }
 
 const VolunteerReducer = (state = initState,action) => {
@@ -35,8 +47,18 @@ const VolunteerReducer = (state = initState,action) => {
             ...oldCases,
             allCases:action.payload,
             gotAllCases:true
+        };
+        let tp = action.payload.totalPages;
+        let tpArr = [];
+        for (let i=0;i<tp;i++){
+            tpArr.push(i);
         }
-        return {...state,cases:newCases};
+        let newAllCasesPagination = {
+            currentPageNumber:action.payload.pageable.pageNumber,
+            pageSize:action.payload.pageable.pageSize,
+            totalPages:tpArr,
+        };
+        return {...state,cases:newCases,allCasesPagination:newAllCasesPagination};
 
         case 'GOT_ASSIGNED_CASES':
         let oldCases1 = state.cases;
@@ -67,7 +89,6 @@ const VolunteerReducer = (state = initState,action) => {
                 return data.requestId === requestId
             });
             let oldRequestStatus =  assignedCasesContent[0].requestStatus;
-            console.log('oldRequestStatus :', oldRequestStatus)
             let statusToPush = {
                 "status": "ASSIGNED",
                 "volunteerId": volunteerId,
@@ -81,14 +102,12 @@ const VolunteerReducer = (state = initState,action) => {
                 requestStatus:oldRequestStatus,
                 currentStatus:'ASSIGNED'
             }
-            console.log(newContentToPush)
            oldAssignedCasesContent.push(newContentToPush);
 
             let newAssignedCases =  {
                 ...oldAssignedCases,
                 content:oldAssignedCasesContent
             }
-            console.log(newAssignedCases)
             let newCases2 = {
                 ...oldCases2,
                 assignedCases:newAssignedCases,
@@ -96,8 +115,77 @@ const VolunteerReducer = (state = initState,action) => {
             }
         return {...state,requestAssigned:true,loading:false,cases:newCases2}
 
+        case 'VOLUNTEER_REQUEST_UNASSIGNED':
+            let requestId1 = action.payload.requestId;
+            let volunteerId1 = action.payload.volunteerId;
+            
+            let oldCases3 = state.cases;
+            let oldAssignedCases1 = oldCases3.assignedCases;
+            let oldAssignedCases1Content = oldAssignedCases1.content;
+            let oldAllCases1 = oldCases3.allCases;
+            let oldAllCasesContentArr = oldAllCases1.content;
+
+            let oldAssignedCasesContentObj = oldAssignedCases1Content.filter(data =>{
+                return data.requestId === requestId1
+            });
+            let oldRequestStatus1 =  oldAssignedCasesContentObj[0].requestStatus;
+            let statusToPush1 = {
+                "status": "UNASSIGNED",
+                "volunteerId": volunteerId1,
+                "updatedBy": volunteerId1,
+                "eventTime": new Date(),
+                "comments": "Request UN Assigned from volunteer ::"+volunteerId1
+            }
+            oldRequestStatus1.push(statusToPush1);
+            let newContentObjToPush = {
+                ...oldAssignedCasesContentObj[0],
+                requestStatus:oldRequestStatus1,
+                currentStatus:'UNASSIGNED'
+            };
+            oldAllCasesContentArr.push(newContentObjToPush);
+            let newAllCases1 =  {
+                ...oldAllCases1,
+                content:oldAllCasesContentArr
+            };
+            /*------------------------------------------------- */
+
+            let newAssignedCasesContent = oldAssignedCases1Content.filter(data =>{
+                return data.requestId !== requestId1
+            });
+            let newAssignedCases1 = {
+                ...oldAssignedCases1,
+                content:newAssignedCasesContent
+            }; 
+
+            let newCases3 = {
+                ...oldCases3,
+                assignedCases:newAssignedCases1,
+                allCases:newAllCases1
+            }
+        return {...state,requestUnAssigned:true,loading:false,cases:newCases3}
+
+        case 'MAKE_ALL_CASES_NULL':
+            let oldCases4 = state.cases;
+            let newCases4 = {
+                ...oldCases4,
+                allCases:null
+            };
+            let oldAllCasesPagination = state.allCasesPagination;
+            let newAllCasesPagination1 = null;
+            if(action.pageNumber===0){
+                newAllCasesPagination1={
+                    ...oldAllCasesPagination
+                }
+            }else{
+                newAllCasesPagination1={
+                    ...oldAllCasesPagination,
+                    currentPageNumber:action.pageNumber
+                };
+            }
+        return {...state,cases:newCases4,allCasesPagination:newAllCasesPagination1}
+
         case 'MAKE_REQUEST_ASSIGNED_FALSE':
-        return {...state,requestAssigned:false,loading:false}
+        return {...state,requestAssigned:false,requestUnAssigned:false,loading:false}
 
         case 'SHOW_VOLUNTEER_LOADING':
         return {...state,loading:true}

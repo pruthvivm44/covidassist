@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button,Container,Form,Row,Col } from 'react-bootstrap';
+import {Button,Container,Form,Row,Col,Spinner } from 'react-bootstrap';
 import { connect } from 'react-redux'
 import {faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -17,6 +17,13 @@ class AssignedCasesRow extends React.Component {
         this.setState({
             toShowStatus:!this.state.toShowStatus
         });
+    }
+    unAssignRequest = ()=>{
+        this.setState({
+            loading:true
+        },()=>{
+         this.props.unAssignNow(this.props.data.requestId);
+        })
     }
     render(){
         return(
@@ -44,7 +51,17 @@ class AssignedCasesRow extends React.Component {
                     }
                     </Button>
                 </td>
-                <td  className="text-center"><Button variant="danger">unAssign</Button></td>
+                <td  className="text-center"><Button variant="danger"  disabled={this.state.loading  && this.props.loading} onClick={this.unAssignRequest} >unAssign
+                {(this.state.loading && this.props.loading) ?
+                    <Spinner
+                        as="span"
+                        animation="grow"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                        className="ml-1 mr-1 "
+                        />:null}
+                </Button></td>
             </tr>
             
                 {this.state.toShowView ? 
