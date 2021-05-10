@@ -2,6 +2,8 @@ import React from 'react';
 import {Table,Container,Row,Col } from 'react-bootstrap';
 import { connect } from 'react-redux'
 import { getCasesByVolunteerId } from '../../store/actions/volunteerAction'
+import { unAssignRequest } from '../../store/actions/volunteerAction'
+import { makeRequestAssignedFalse } from '../../store/actions/volunteerAction'
 import Loading from '../Loading';
 import ErrorOrSuccessModal from '../shared/errorOrSuccessModal';
 import AssignedCasesRow from './assignedCasesRow';
@@ -15,7 +17,7 @@ class AssignedCases extends React.Component {
             requestId:requestId,
             volunteerId:this.props.auth.uid
         };
-        this.props.assignRequest(data);
+        this.props.unAssignRequest(data);
     }
     render(){
         if(this.props.assignedCases){
@@ -27,6 +29,9 @@ class AssignedCases extends React.Component {
                                 <h3>No Data present</h3>
                             </Col>
                         </Row>
+                        {this.props.requestUnAssigned ?
+                        <ErrorOrSuccessModal type={'success'} open={this.props.requestUnAssigned} heading={'Request unAssigned'} body={'Your request has been unAssigned .'} handleClose={this.props.makeRequestAssignedFalse}/>
+                    :null}
                     </Container>
                 )
             }else{
@@ -56,8 +61,8 @@ class AssignedCases extends React.Component {
                             })}
                         </tbody>
                     </Table>                              
-                    {this.props.requestAssigned ?
-                        <ErrorOrSuccessModal type={'success'} open={this.props.requestAssigned} heading={'Request unAssigned'} body={'Thank you for Assigning the request .'} handleClose={this.closeSuccessReqModal}/>
+                    {this.props.requestUnAssigned ?
+                        <ErrorOrSuccessModal type={'success'} open={this.props.requestUnAssigned} heading={'Request unAssigned'} body={'Your request has been unAssigned .'} handleClose={this.props.makeRequestAssignedFalse}/>
                     :null}
                     </>
                 )
@@ -77,9 +82,10 @@ class AssignedCases extends React.Component {
 }
 const mapStateToProps = (state) => {
     return{
-        auth : state.firebase.auth,
-        assignedCases : state.volunteer.cases.assignedCases,
-        loading:state.volunteer.loading
+        auth:state.firebase.auth,
+        assignedCases:state.volunteer.cases.assignedCases,
+        loading:state.volunteer.loading,
+        requestUnAssigned:state.volunteer.requestUnAssigned,
     }
 }
 
@@ -87,6 +93,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) =>{
     return {
         getCasesByVolunteerId:(creds) => dispatch(getCasesByVolunteerId(creds)),
+        unAssignRequest:(creds) => dispatch(unAssignRequest(creds)),
+        makeRequestAssignedFalse:() => dispatch(makeRequestAssignedFalse()),
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(AssignedCases);

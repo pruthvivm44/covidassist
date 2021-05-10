@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getUrl } from './url'
-
+let pageLimit = 10;
 let url = getUrl;
 
 export const gotVolunteerDetails = data => {
@@ -37,6 +37,13 @@ export const gotAssignedCase =  data =>{
       };
 }
 
+export const requestUnAssignedForVolunteer = data =>{
+    return {
+        type:'VOLUNTEER_REQUEST_UNASSIGNED',
+        payload:data
+      };
+}
+
 export const getVolunteerById = (credentials) =>{
     return (dispatch,getState)=>{
         dispatch({type:'SHOW_VOLUNTEER_LOADING'});
@@ -53,8 +60,12 @@ export const getVolunteerById = (credentials) =>{
             })
             .catch(function (error) {
                 //handle error
-                if(error.response.status===404){
-                    dispatch({type:'VOLUNTEER_NOT_FOUND'})
+                if(error.response){
+                    if(error.response.status===404){
+                        dispatch({type:'VOLUNTEER_NOT_FOUND'})
+                    }
+                }else{
+                    console.log(error)
                 }
                 dispatch({type:'ERROR_GETTING_VOLUNTEER_DETAILS',error});
             });
@@ -85,19 +96,32 @@ export const registerVolunteer = (credentials) =>{
 
 export const getAllCases = (credentials) =>{
     return (dispatch,getState)=>{
-        axios({
-            method: 'GET',
-            url: url+'patient/request/findAll/',
-            headers: {
-                'content-type': 'application/json'
+        dispatch({type:'MAKE_ALL_CASES_NULL',pageNumber:credentials.pageNumber});
+        let params=null;
+        if(credentials.pageNumber === 0){
+            params={
+                limit:pageLimit
             }
-            })
-            .then(function (response) {
-                dispatch(gotAllCases(response.data))
-            })
-            .catch(function (error) {
-                dispatch({type:'ERROR_FETCHING_REQUESTS',error});
-            });
+        }else{
+            params= {
+                page:credentials.pageNumber,
+                limit:pageLimit
+            }
+        }
+            axios({
+                method: 'GET',
+                url: url+'patient/request/findAll/',
+                params:params,
+                headers: {
+                    'content-type': 'application/json'
+                }
+                })
+                .then(function (response) {
+                    dispatch(gotAllCases(response.data))
+                })
+                .catch(function (error) {
+                    dispatch({type:'ERROR_FETCHING_REQUESTS',error});
+                });
     }
 }
 
@@ -151,5 +175,31 @@ export const assignRequest = (credentials) =>{
 export const makeRequestAssignedFalse = (credentials) =>{
     return (dispatch)=>{
         dispatch({type:'MAKE_REQUEST_ASSIGNED_FALSE'});
+    }
+}
+
+export const unAssignRequest = (credentials) =>{
+    return (dispatch,getState)=>{
+        dispatch({type:'SHOW_VOLUNTEER_LOADING'});
+        axios({
+            method: 'PUT',
+            url: url+'patient/unAssign/'+credentials.requestId,
+            params: {
+                volunteerId:credentials.volunteerId,
+            },
+            headers: {
+                'content-type': 'application/json'
+            }
+            })
+            .then(function (response) {
+                let data = {
+                    requestId:credentials.requestId,
+                    volunteerId:credentials.volunteerId
+                };
+                dispatch(requestUnAssignedForVolunteer(data));
+            })
+            .catch(function (error) {
+                dispatch({type:'ERROR_ASSIGNING_REQUEST',error});
+            });
     }
 }

@@ -67,3 +67,19 @@ code {
   opacity: 50 !important;
   background-color:transparent !important;
 }
+.redColor{
+  color:#E9002F !important;
+}
+.pagination>li>a{
+  color: #E9002F !important;
+}
+
+.pagination>li>a:hover{
+  color: #fff !important;
+  background-color: #E9002F !important;
+}
+.pagination>li>span{
+    color: #fff !important;
+    background-color: #E9002F !important;
+    border-color: #E9002F !important;
+  }

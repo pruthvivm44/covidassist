@@ -7,10 +7,14 @@ import Loading from '../Loading';
 import ErrorOrSuccessModal from '../shared/errorOrSuccessModal';
 import AllCasesRow from './allCasesRow';
 import { makeRequestAssignedFalse } from '../../store/actions/volunteerAction'
+import CasesPagination from './casesPagination';
 
 class AllCases extends React.Component {
     componentDidMount(){
-        this.props.getAllCases();
+        let data = {
+            pageNumber:0
+        };
+        this.props.getAllCases(data);
     }
     assignNow = (requestId)=>{
         let data = {
@@ -21,6 +25,13 @@ class AllCases extends React.Component {
     }
     closeSuccessReqModal = () =>{
         this.props.makeRequestAssignedFalse();
+    }
+    navigateToPage = (pageNumber)=>{
+        console.log(pageNumber)
+        let data = {
+            pageNumber:pageNumber
+        };
+        this.props.getAllCases(data);
     }
     render(){
         if(this.props.allCases){
@@ -70,6 +81,9 @@ class AllCases extends React.Component {
                     {this.props.requestAssigned ?
                         <ErrorOrSuccessModal type={'success'} open={this.props.requestAssigned} heading={'Request Assigned'} body={'Thank you for Assigning the request .'} handleClose={this.closeSuccessReqModal}/>
                     :null}
+                    <div className="text-center d-flex justify-content-center">
+                        <CasesPagination data={this.props.allCasesPagination} navigateToPage={this.navigateToPage}/>
+                    </div>
                     </>
                 )
             }
@@ -92,14 +106,15 @@ const mapStateToProps = (state) => {
         auth : state.firebase.auth,
         allCases : state.volunteer.cases.allCases,
         requestAssigned : state.volunteer.requestAssigned,
-        loading:state.volunteer.loading
+        loading:state.volunteer.loading,
+        allCasesPagination:state.volunteer.allCasesPagination
     }
 }
 
 // dispatch the action or call the functions of auth
 const mapDispatchToProps = (dispatch) =>{
     return {
-        getAllCases:() => dispatch(getAllCases()),
+        getAllCases:(data) => dispatch(getAllCases(data)),
         assignRequest:(creds) => dispatch(assignRequest(creds)),
         makeRequestAssignedFalse:() => dispatch(makeRequestAssignedFalse()),
     }
