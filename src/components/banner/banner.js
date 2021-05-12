@@ -1,5 +1,6 @@
 import React from 'react';
 import { Row, Container, Col,Card} from 'react-bootstrap'
+import Helped from './helped';
 import PatientForm from './patientForm';
 
 const Banner = (props) => {
@@ -22,6 +23,7 @@ const Banner = (props) => {
                         </Card>
                     </Col>
                 </Row>
+                <Helped />
             </Container>
         )
 

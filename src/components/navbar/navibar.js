@@ -14,8 +14,7 @@ const Navibar = (props) => {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto"></Nav>
                     <Nav.Link className="black hoverred" to={'/'} as={Link}>HOME</Nav.Link>
-                    <Nav.Link className="black hoverred" to={'/volunteer'} as={Link}>PLASMA DONAR</Nav.Link>
-                    <Nav.Link className="black hoverred" href="#deets">RESOURCES</Nav.Link>
+                    <Nav.Link className="black hoverred" to={'/volunteer'} as={Link}>LEADS</Nav.Link>
                     {props.auth.uid ?
                     <NavDropdown title="ACCOUNT" id="basic-nav-dropdown" className="black hoverred">
                         <NavDropdown.Item href="# " to={'/volunteer'} as={Link}>Dashboard</NavDropdown.Item>
