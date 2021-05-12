@@ -12,19 +12,19 @@ class Helped extends React.Component {
                                 <Card.Title className="patientRequestText text-center" style={{fontSize:'30px'}}>SO FAR WE HAVE</Card.Title>
                                 <Row className="p-3">
                                     <Col md="3" className="text-center">
-                                        <p className="helpNumber">5000</p>
+                                        <p className="helpNumber">00</p>
                                         <h4>Helped Patient's</h4>
                                     </Col>
                                     <Col md="3" className="text-center">
-                                        <p className="helpNumber">5000</p>
+                                        <p className="helpNumber">00</p>
                                         <h4>Patient request's</h4>
                                     </Col>
                                     <Col md="3" className="text-center">
-                                        <p className="helpNumber">5000</p>
+                                        <p className="helpNumber">00</p>
                                         <h4>Volunteer's</h4>
                                     </Col>
                                     <Col md="3" className="text-center">
-                                        <p className="helpNumber">5000</p>
+                                        <p className="helpNumber">00</p>
                                         <h4>Lead's Generated</h4>
                                     </Col>
                                 </Row>

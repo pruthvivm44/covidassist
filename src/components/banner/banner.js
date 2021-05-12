@@ -1,10 +1,12 @@
 import React from 'react';
 import { Row, Container, Col,Card} from 'react-bootstrap'
+import Footer from '../footer';
 import Helped from './helped';
 import PatientForm from './patientForm';
 
 const Banner = (props) => {
         return(
+            <>
             <Container fluid>
                 <Row>
                     <Col md={12} className="text-center ">
@@ -24,7 +26,10 @@ const Banner = (props) => {
                     </Col>
                 </Row>
                 <Helped />
+               
             </Container>
+             <Footer />
+             </>
         )
 
   }
