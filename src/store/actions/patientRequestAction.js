@@ -35,3 +35,4 @@ export const closePatientReqModal = ()=>{
         dispatch({type:'CLOSE_PATIENT_REQUESTED_SUCCESS_MODAL'});
     }
 }
+

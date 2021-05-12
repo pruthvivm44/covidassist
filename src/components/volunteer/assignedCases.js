@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { getCasesByVolunteerId } from '../../store/actions/volunteerAction'
 import { unAssignRequest } from '../../store/actions/volunteerAction'
 import { makeRequestAssignedFalse } from '../../store/actions/volunteerAction'
+import { addCommentToPatientReq } from '../../store/actions/volunteerAction'
 import Loading from '../Loading';
 import ErrorOrSuccessModal from '../shared/errorOrSuccessModal';
 import AssignedCasesRow from './assignedCasesRow';
@@ -18,6 +19,24 @@ class AssignedCases extends React.Component {
             volunteerId:this.props.auth.uid
         };
         this.props.unAssignRequest(data);
+    }
+    addComment = (comment,data)=>{
+        let cmtArr = [];
+        let commentData = {
+            comment:comment,
+            volunteerId:this.props.auth.uid,
+        };
+        if(data.comments){
+            data.comments.push(commentData);
+            cmtArr = data.comments;
+        }else{
+            cmtArr.push(commentData);
+        }
+        let dataToSend = {
+            requestId:data.requestId,
+            comments:cmtArr
+        };
+        this.props.addCommentToPatientReq(dataToSend);
     }
     render(){
         if(this.props.assignedCases){
@@ -55,7 +74,7 @@ class AssignedCases extends React.Component {
                             {this.props.assignedCases.content.map((data,i) =>{
                                 // if(data.currentStatus==='Open'){
                                     return(
-                                        <AssignedCasesRow data={data}  key={i} unAssignNow={this.unAssignNow} index={i} />
+                                        <AssignedCasesRow data={data}  key={i} addComment={this.addComment} unAssignNow={this.unAssignNow} index={i} />
                                     )
                                 // }
                             })}
@@ -95,6 +114,7 @@ const mapDispatchToProps = (dispatch) =>{
         getCasesByVolunteerId:(creds) => dispatch(getCasesByVolunteerId(creds)),
         unAssignRequest:(creds) => dispatch(unAssignRequest(creds)),
         makeRequestAssignedFalse:() => dispatch(makeRequestAssignedFalse()),
+        addCommentToPatientReq:(creds)=>dispatch(addCommentToPatientReq(creds))
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(AssignedCases);

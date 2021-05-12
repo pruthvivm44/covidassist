@@ -184,6 +184,39 @@ const VolunteerReducer = (state = initState,action) => {
             }
         return {...state,cases:newCases4,allCasesPagination:newAllCasesPagination1}
 
+        case 'COMMENT_ADDED':
+            let requestIdToSearch = action.payload.requestId;
+            let newComments = action.payload.comments
+            let oldCases5 = state.cases;
+            let oldAssignedCases5 = oldCases5.assignedCases;
+            let oldAssignedCasesContent5 = oldAssignedCases5.content;
+            let contentObjToUpdateIndex = oldAssignedCasesContent5.findIndex((data) => {
+                return data.requestId === requestIdToSearch
+            });
+
+            if(contentObjToUpdateIndex >= 0){
+                const contentSlice =  oldAssignedCasesContent5.slice();
+                const contentToupdate = contentSlice[contentObjToUpdateIndex];
+                const updateUnitContent = {
+                    ...contentToupdate,
+                    comments:newComments
+                }
+                contentSlice[contentObjToUpdateIndex] = updateUnitContent;
+                let newAssignedCases5 = {
+                    ...oldAssignedCases5,
+                    content:contentSlice
+                };
+
+                let newCases5 ={
+                    ...oldCases5,
+                    assignedCases:newAssignedCases5
+                }
+                return {...state,cases:newCases5,loading:false}
+            }
+            else{
+                return {...state,loading:false}
+            }
+
         case 'MAKE_REQUEST_ASSIGNED_FALSE':
         return {...state,requestAssigned:false,requestUnAssigned:false,loading:false}
 

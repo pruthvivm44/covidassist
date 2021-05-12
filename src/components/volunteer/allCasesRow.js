@@ -20,7 +20,7 @@ class AllCasesRow extends React.Component {
         let date = new Date(this.props.data.createdAt);
         return(
             <tr>
-                <td>1</td>
+                <td>{this.props.index}</td>
                 <td>{this.props.data.patientDetails.name}</td>
                 <td>{this.props.data.serviceRequested}</td>
                 <td>{this.props.data.address.district}</td>

@@ -44,6 +44,13 @@ export const requestUnAssignedForVolunteer = data =>{
       };
 }
 
+export const commentAdded = data =>{
+    return {
+        type:'COMMENT_ADDED',
+        payload:data
+    }
+}
+
 export const getVolunteerById = (credentials) =>{
     return (dispatch,getState)=>{
         dispatch({type:'SHOW_VOLUNTEER_LOADING'});
@@ -97,17 +104,10 @@ export const registerVolunteer = (credentials) =>{
 export const getAllCases = (credentials) =>{
     return (dispatch,getState)=>{
         dispatch({type:'MAKE_ALL_CASES_NULL',pageNumber:credentials.pageNumber});
-        let params=null;
-        if(credentials.pageNumber === 0){
-            params={
-                limit:pageLimit
+            let params={
+                ...credentials,
+                limit:pageLimit,
             }
-        }else{
-            params= {
-                page:credentials.pageNumber,
-                limit:pageLimit
-            }
-        }
             axios({
                 method: 'GET',
                 url: url+'patient/request/findAll/',
@@ -200,6 +200,28 @@ export const unAssignRequest = (credentials) =>{
             })
             .catch(function (error) {
                 dispatch({type:'ERROR_ASSIGNING_REQUEST',error});
+            });
+    }
+}
+
+export const addCommentToPatientReq = (credentials) =>{
+    return (dispatch,getState)=>{
+        dispatch({type:'SHOW_VOLUNTEER_LOADING'});
+        axios({
+            method: 'put',
+            url: url+'patient/addComments/'+credentials.requestId,
+            data:credentials.comments[0],
+            headers: {
+                'content-type': 'application/json'
+            }
+            })
+            .then(function (response) {
+                dispatch(commentAdded(credentials));
+            })
+            .catch(function (error) {
+                //handle error
+                console.log(error)
+                dispatch({type:'ERROR_ADDING_COMMENT',error});
             });
     }
 }

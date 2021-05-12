@@ -10,7 +10,8 @@ class AssignedCasesRow extends React.Component {
         this.state={
             loading:false,
             toShowView:false,
-            toShowStatus:false
+            toShowStatus:false,
+            comment:''
         };
     }
     viewRequestStatus = () =>{
@@ -24,6 +25,12 @@ class AssignedCasesRow extends React.Component {
         },()=>{
          this.props.unAssignNow(this.props.data.requestId);
         })
+    }
+    addComment = ()=>{
+        this.setState({
+            comment:''
+        });
+        this.props.addComment(this.state.comment,this.props.data);
     }
     render(){
         return(
@@ -66,7 +73,7 @@ class AssignedCasesRow extends React.Component {
             
                 {this.state.toShowView ? 
                 <tr>
-                    <td colSpan={12}><Container>
+                    <td colSpan={12}><Container fluid>
                         <Row>
                             <Col >
                                 <p><strong>SRF_IF : </strong>{this.props.data.srfId ? this.props.data.srfId : 'NA'}</p>
@@ -121,9 +128,7 @@ class AssignedCasesRow extends React.Component {
                             <Col >
                                 {this.props.data.patientDetails.symptoms.length>0 ? 
                                     <p><strong>Symptoms : </strong>
-                                        {this.props.data.patientDetails.symptoms.map( data =>(
-                                            data
-                                        ))}
+                                     {this.props.data.patientDetails.symptoms.toString()} 
                                     </p>
                                     :
                                     <p><strong>Symptoms : </strong>NA</p>
@@ -132,9 +137,7 @@ class AssignedCasesRow extends React.Component {
                             <Col >
                                 {this.props.data.patientDetails.comorbidities.length>0 ? 
                                     <p><strong>Suffering with : </strong>
-                                        {this.props.data.patientDetails.comorbidities.map( data =>(
-                                            data
-                                        ))}
+                                      {this.props.data.patientDetails.comorbidities.toString()}
                                     </p>
                                     :
                                     <p><strong>Suffering with : </strong>NA</p>
@@ -155,38 +158,52 @@ class AssignedCasesRow extends React.Component {
                             </Col>
                         </Row>
                         <Row>
+                            <Col md={12} className="pb-2">
+                                <p style={{color:'blue'}} className="mb-2" type="submit" onClick={this.viewRequestStatus}>
+                                    View Request Status
+                                </p>
+                                {this.state.toShowStatus ? 
+                                <>
+                                        {this.props.data.requestStatus.length>0 ? 
+                                            <p><strong>Request Status : </strong>
+                                                {this.props.data.requestStatus.map( data =>(
+                                                    data.status+'->'
+                                                ))}
+                                            </p>
+                                            :
+                                            <p><strong>Request Status : </strong>NA</p>
+                                        }
+                                </>:null}
+                            </Col>
+                        </Row>
+                        {this.props.data.comments?
+                        <>
+                        {this.props.data.comments.length>0 ? 
+                        <Row>
+                            <Col>
+                                    <p><strong>Comments : </strong></p>
+                                    <ul>
+                                        {this.props.data.comments.map( (data,i) =>(
+                                            <li key={i}>{data.comment}</li>
+                                        ))}
+
+                                    </ul>
+
+                            </Col>
+                        </Row>:null}
+                        </>:null}
+                        <Row>
                             <Col md={12}>
                                 <Form>
                                     <Form.Group controlId="comments">
-                                        <Form.Control as="textarea" rows={3} placeholder="Any Comments ( Optional )" onChange={this.onDescriptionChange} />
+                                        <Form.Control as="textarea" value={this.state.comment} rows={3} placeholder="Any Comments ( Optional )" onChange={(e)=>{this.setState({comment:e.target.value})}} />
                                     </Form.Group>
-                                    <Button variant="danger" type="submit" onClick={this.submit}>
+                                    <Button variant="danger" onClick={this.addComment}>
                                         Add Comment
                                     </Button>
                                 </Form>
                             </Col>
-                        </Row>
-                        <Row>
-                            <Col md={12} className="pt-3 pb-3">
-                                <Button variant="danger" type="submit" onClick={this.viewRequestStatus}>
-                                    View Request Status
-                                </Button>
-                            </Col>
-                        </Row>
-                        {this.state.toShowStatus ? 
-                        <Row>
-                        <Col >
-                            {this.props.data.requestStatus.length>0 ? 
-                                <p><strong>Request Status : </strong>
-                                    {this.props.data.requestStatus.map( data =>(
-                                        data.status+'->'
-                                    ))}
-                                </p>
-                                :
-                                <p><strong>Request Status : </strong>NA</p>
-                            }
-                        </Col>
-                        </Row>:null}
+                        </Row> 
                     </Container>
                     </td>
                 </tr>

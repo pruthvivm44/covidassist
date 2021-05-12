@@ -20,8 +20,8 @@ class CasesPagination extends React.Component {
                             )
                         }
                     })}
-                     {this.props.data.totalPages.length >1 ?
-                        <Pagination.Next disabled={this.props.data.currentPageNumber===this.props.data.totalPages.length? true:false} onClick={()=>this.props.navigateToPage(this.props.data.currentPageNumber+1)}/>
+                     { (this.props.data.totalPages.length >1  && this.props.data.currentPageNumber+1!==this.props.data.totalPages.length)?
+                        <Pagination.Next onClick={()=>this.props.navigateToPage(this.props.data.currentPageNumber+1)}/>
                     :null}
                 </Pagination>
             )

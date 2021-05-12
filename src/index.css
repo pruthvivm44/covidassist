@@ -70,6 +70,9 @@ code {
 .redColor{
   color:#E9002F !important;
 }
+.whiteColor{
+  color:#fff !important;
+}
 .pagination>li>a{
   color: #E9002F !important;
 }
@@ -83,3 +86,10 @@ code {
     background-color: #E9002F !important;
     border-color: #E9002F !important;
   }
+
+.helpNumber{
+  font-size: 60px;
+}
+.footerBack{
+  background-color: grey;
+}

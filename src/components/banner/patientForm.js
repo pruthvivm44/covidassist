@@ -11,29 +11,29 @@ class PatientForm extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            patientName:null,
-            srf_id:null,
-            buNo:null,
-            covRes:null,
-            vacTaken:null,
-            patAge:null,
-            patGender:null,
-            careTakerName:null,
+            patientName:'',
+            srf_id:'',
+            buNo:'',
+            covRes:'',
+            vacTaken:'',
+            patAge:'',
+            patGender:'',
+            careTakerName:'',
             priMobNo:'',
             secMobNo:'',
-            relWithPat:null,
+            relWithPat:'',
             admittedToHospital:'not updated',
-            hospName:null,
-            hospAddr:null,
-            address:null,
-            landMark:null,
-            city:null,
+            hospName:'',
+            hospAddr:'',
+            address:'',
+            landMark:'',
+            city:'',
             pincode:'',
-            stateName:null,
+            stateName:'',
             districtArray:[],
-            district:null,
-            serviceRequired:null,
-            description:null,
+            district:'',
+            serviceRequired:'',
+            description:'',
             toShowErrorOrSuccessModal:false,
             type:null,
             successOrError:{
@@ -157,7 +157,7 @@ class PatientForm extends React.Component {
     }
     onPincodeChange = (e)=>{
         if(e.target.value.length>6){
-            alert('Enter a valid pincode');
+            alert('Pincode can only be 6 Digits.');
         }else{
             this.setState({
                 pincode:e.target.value
@@ -185,9 +185,45 @@ class PatientForm extends React.Component {
         });
     }
     closeSuccessReqModal = () =>{
-        this.props.closePatientReqModal();
+        this.setState({
+            patientName:'',
+            srf_id:'',
+            buNo:'',
+            covRes:'',
+            vacTaken:'',
+            patAge:'',
+            patGender:'',
+            careTakerName:'',
+            priMobNo:'',
+            secMobNo:'',
+            relWithPat:'',
+            admittedToHospital:'not updated',
+            hospName:'',
+            hospAddr:'',
+            address:'',
+            landMark:'',
+            city:'',
+            pincode:'',
+            stateName:'',
+            districtArray:[],
+            district:'',
+            serviceRequired:'',
+            description:'',
+            toShowErrorOrSuccessModal:false,
+            type:null,
+            successOrError:{
+                heading:null,
+                body:null,
+            },
+            coMorbidities:[],
+            symptoms:[],
+            regexp : /^[0-9\b]+$/,
+        },()=>{
+            this.props.closePatientReqModal();
+        });
     }
     onChangeState = (data)=>{
+        console.log( data.target.value)
         if(data.target.value==='null'){
             this.setState({
                 stateName:null,
@@ -279,6 +315,17 @@ class PatientForm extends React.Component {
                 successOrError:{
                     heading:'Required',
                     body:'Please Select your covid test result or if not done select Not yet Tested .',
+                }
+            });
+            break;
+
+            case !state.vacTaken:
+            this.setState({
+                toShowErrorOrSuccessModal:true,
+                type:'error',
+                successOrError:{
+                    heading:'Required',
+                    body:'Please Select whether you took vaccine or not .',
                 }
             });
             break;
@@ -457,6 +504,7 @@ class PatientForm extends React.Component {
             break;
         }
     }
+
     render(){
         return(
             <Container>
@@ -465,19 +513,19 @@ class PatientForm extends React.Component {
                         <Col md={4}>
                             <Form.Group controlId="ptName">
                                 <Form.Label>Patient Name</Form.Label>
-                                <Form.Control type="text" placeholder="Enter Patient Name" onChange={this.onPatientNameChange} />
+                                <Form.Control type="text" value={this.state.patientName} placeholder="Enter Patient Name" onChange={this.onPatientNameChange} />
                             </Form.Group>
                         </Col>
                         <Col md={4}>
                             <Form.Group controlId="srfId">
                                 <Form.Label>SRF_ID</Form.Label>
-                                <Form.Control type="text" placeholder="SRF_ID ( Optional )" onChange={this.onSrfIdChange}/>
+                                <Form.Control type="text" value={this.state.srf_id} placeholder="SRF_ID ( Optional )" onChange={this.onSrfIdChange}/>
                             </Form.Group>
                         </Col>
                         <Col md={4}>
                             <Form.Group controlId="buNumber">
                                 <Form.Label>BU Number</Form.Label>
-                                <Form.Control type="text" placeholder="BU Number ( Optional )" onChange={this.onBuNoChange} />
+                                <Form.Control type="text" value={this.state.buNo}  placeholder="BU Number ( Optional )" onChange={this.onBuNoChange} />
                             </Form.Group>
                         </Col>
                     </Row>
@@ -516,7 +564,7 @@ class PatientForm extends React.Component {
                         <Col md={4}>
                             <Form.Group controlId="ptAge">
                                 <Form.Label>Patient Age</Form.Label>
-                                <Form.Control type="number" placeholder="age" onChange={this.onPatAgeChange}/>
+                                <Form.Control type="number" value={this.state.patAge} placeholder="age" onChange={this.onPatAgeChange}/>
                             </Form.Group>
                         </Col>
                     </Row>
@@ -540,7 +588,7 @@ class PatientForm extends React.Component {
                         <Col md={4}>
                             <Form.Group controlId="ctName">
                                 <Form.Label>Care Taker Name</Form.Label>
-                                <Form.Control type="text" placeholder="Care Taker Name" onChange={this.oncareTakeNameChange}/>
+                                <Form.Control type="text" value={this.state.careTakerName} placeholder="Care Taker Name" onChange={this.oncareTakeNameChange}/>
                             </Form.Group>
                         </Col>
                         <Col md={4}>
@@ -560,7 +608,7 @@ class PatientForm extends React.Component {
                         <Col md={4}>
                             <Form.Group controlId="relWithPat">
                                 <Form.Label>Relationship with patient</Form.Label>
-                                <Form.Control type="text" placeholder="Relationship with patient ( Optional )" onChange={this.relWithPatChange} />
+                                <Form.Control type="text" value={this.state.relWithPat} placeholder="Relationship with patient ( Optional )" onChange={this.relWithPatChange} />
                             </Form.Group>
                         </Col>
                         <Col md={4}>
@@ -584,13 +632,13 @@ class PatientForm extends React.Component {
                         <Col md={4}>
                             <Form.Group controlId="hospName">
                                 <Form.Label>Hospital Name</Form.Label>
-                                <Form.Control type="text" placeholder="Hospital Name" onChange={this.onHospNameChange}/>
+                                <Form.Control type="text" value={this.state.hospName} placeholder="Hospital Name" onChange={this.onHospNameChange}/>
                             </Form.Group>
                         </Col>
                         <Col md={4}>
                             <Form.Group controlId="hospAddr">
                                 <Form.Label>Hospital Address</Form.Label>
-                                <Form.Control type="text" placeholder="Hospital Address"  onChange={this.onHospAddrChange}/>
+                                <Form.Control type="text" value={this.state.hospAddr} placeholder="Hospital Address"  onChange={this.onHospAddrChange}/>
                             </Form.Group>
                         </Col>
                         </>:null}
@@ -599,7 +647,7 @@ class PatientForm extends React.Component {
                         <Col md={12}>
                             <Form.Group controlId="addressLine1">
                                 <Form.Label>Address </Form.Label>
-                                <Form.Control as="textarea" rows={3} placeholder="Address" onChange={this.onAddressChange}/>
+                                <Form.Control as="textarea" value={this.state.address} rows={3} placeholder="Address" onChange={this.onAddressChange}/>
                             </Form.Group>
                         </Col>
                     </Row>
@@ -613,7 +661,7 @@ class PatientForm extends React.Component {
                         <Col md={4}>
                             <Form.Group controlId="city">
                                 <Form.Label>City</Form.Label>
-                                <Form.Control type="text" placeholder="City" onChange={this.onCityChange} />
+                                <Form.Control value={this.state.city} type="text" placeholder="City" onChange={this.onCityChange} />
                             </Form.Group>
                         </Col>
                         <Col md={4}>
@@ -706,7 +754,7 @@ class PatientForm extends React.Component {
                         <Col md={12}>
                             <Form.Group controlId="description">
                                 <Form.Label>Want to tell us anything ?</Form.Label>
-                                <Form.Control as="textarea" rows={3} placeholder="description ( Optional )" onChange={this.onDescriptionChange} />
+                                <Form.Control as="textarea" value={this.state.description} rows={3} placeholder="description ( Optional )" onChange={this.onDescriptionChange} />
                             </Form.Group>
                         </Col>
                     </Row>
