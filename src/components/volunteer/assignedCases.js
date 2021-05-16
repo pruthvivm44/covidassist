@@ -2,7 +2,7 @@ import React from 'react';
 import {Table,Container,Row,Col } from 'react-bootstrap';
 import { connect } from 'react-redux'
 import { getCasesByVolunteerId } from '../../store/actions/volunteerAction'
-import { unAssignRequest } from '../../store/actions/volunteerAction'
+import { changeStatus } from '../../store/actions/volunteerAction'
 import { makeRequestAssignedFalse } from '../../store/actions/volunteerAction'
 import { addCommentToPatientReq } from '../../store/actions/volunteerAction'
 import Loading from '../Loading';
@@ -13,12 +13,17 @@ class AssignedCases extends React.Component {
     componentDidMount(){
         this.props.getCasesByVolunteerId(this.props.auth.uid);
     }
-    unAssignNow = (requestId)=>{
+    confirmStatusChangeNow = (requestId,comment,status)=>{
         let data = {
             requestId:requestId,
-            volunteerId:this.props.auth.uid
+            reqStatus:{
+                status:status,
+                volunteerId:this.props.auth.uid,
+                updatedBy:this.props.auth.uid,
+                comments:comment
+            }
         };
-        this.props.unAssignRequest(data);
+        this.props.changeStatus(data);
     }
     addComment = (comment,data)=>{
         let cmtArr = [];
@@ -74,14 +79,14 @@ class AssignedCases extends React.Component {
                             {this.props.assignedCases.content.map((data,i) =>{
                                 // if(data.currentStatus==='Open'){
                                     return(
-                                        <AssignedCasesRow data={data}  key={i} addComment={this.addComment} unAssignNow={this.unAssignNow} index={i} />
+                                        <AssignedCasesRow data={data}  key={i} addComment={this.addComment} confirmStatusChangeNow={this.confirmStatusChangeNow} index={i} />
                                     )
                                 // }
                             })}
                         </tbody>
                     </Table>                              
-                    {this.props.requestUnAssigned ?
-                        <ErrorOrSuccessModal type={'success'} open={this.props.requestUnAssigned} heading={'Request unAssigned'} body={'Your request has been unAssigned .'} handleClose={this.props.makeRequestAssignedFalse}/>
+                    {this.props.statusChanged ?
+                        <ErrorOrSuccessModal type={'success'} open={this.props.statusChanged} heading={this.props.successModalState.title} body={this.props.successModalState.body} handleClose={this.props.makeRequestAssignedFalse}/>
                     :null}
                     </>
                 )
@@ -104,7 +109,8 @@ const mapStateToProps = (state) => {
         auth:state.firebase.auth,
         assignedCases:state.volunteer.cases.assignedCases,
         loading:state.volunteer.loading,
-        requestUnAssigned:state.volunteer.requestUnAssigned,
+        successModalState:state.volunteer.successModalState,
+        statusChanged:state.volunteer.statusChanged
     }
 }
 
@@ -112,7 +118,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) =>{
     return {
         getCasesByVolunteerId:(creds) => dispatch(getCasesByVolunteerId(creds)),
-        unAssignRequest:(creds) => dispatch(unAssignRequest(creds)),
+        changeStatus:(creds) => dispatch(changeStatus(creds)),
         makeRequestAssignedFalse:() => dispatch(makeRequestAssignedFalse()),
         addCommentToPatientReq:(creds)=>dispatch(addCommentToPatientReq(creds))
     }

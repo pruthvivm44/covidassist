@@ -37,9 +37,9 @@ export const gotAssignedCase =  data =>{
       };
 }
 
-export const requestUnAssignedForVolunteer = data =>{
+export const statusChanged = data =>{
     return {
-        type:'VOLUNTEER_REQUEST_UNASSIGNED',
+        type:'STATUS_CHANGED',
         payload:data
       };
 }
@@ -178,25 +178,19 @@ export const makeRequestAssignedFalse = (credentials) =>{
     }
 }
 
-export const unAssignRequest = (credentials) =>{
+export const changeStatus = (credentials) =>{
     return (dispatch,getState)=>{
         dispatch({type:'SHOW_VOLUNTEER_LOADING'});
         axios({
             method: 'PUT',
-            url: url+'patient/unAssign/'+credentials.requestId,
-            params: {
-                volunteerId:credentials.volunteerId,
-            },
+            url: url+'patient/changeStatus/'+credentials.requestId,
+            data:credentials.reqStatus,
             headers: {
                 'content-type': 'application/json'
             }
             })
             .then(function (response) {
-                let data = {
-                    requestId:credentials.requestId,
-                    volunteerId:credentials.volunteerId
-                };
-                dispatch(requestUnAssignedForVolunteer(data));
+                dispatch(statusChanged(credentials));
             })
             .catch(function (error) {
                 dispatch({type:'ERROR_ASSIGNING_REQUEST',error});

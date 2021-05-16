@@ -1,8 +1,9 @@
 import React from 'react';
-import {Button,Container,Form,Row,Col,Spinner } from 'react-bootstrap';
+import {Button,Container,Form,Row,Col,Spinner,DropdownButton,ButtonGroup,Dropdown } from 'react-bootstrap';
 import { connect } from 'react-redux'
 import {faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import ChangeStatusModal from '../shared/changeStatusModal';
 
 class AssignedCasesRow extends React.Component {
     constructor(props){
@@ -11,7 +12,9 @@ class AssignedCasesRow extends React.Component {
             loading:false,
             toShowView:false,
             toShowStatus:false,
-            comment:''
+            comment:'',
+            openStatusChangeModal:false,
+            status:''
         };
     }
     viewRequestStatus = () =>{
@@ -32,7 +35,29 @@ class AssignedCasesRow extends React.Component {
         });
         this.props.addComment(this.state.comment,this.props.data);
     }
+    openModal = (status) =>{
+        this.setState({
+            openStatusChangeModal:true,
+            status:status
+        });
+    }
+
+    closeStatusChangeModal = ()=>{
+        this.setState({
+            openStatusChangeModal:false,
+            status:''
+        });
+    }
+    confirmStatusChange = (comment)=>{
+        this.setState({
+            openStatusChangeModal:false,
+            loading:true
+        },()=>{
+            this.props.confirmStatusChangeNow(this.props.data.requestId,comment,this.state.status)
+        });
+    }
     render(){
+        let currentStatus = this.props.data.currentStatus
         return(
             <>
             <tr>    
@@ -58,17 +83,41 @@ class AssignedCasesRow extends React.Component {
                     }
                     </Button>
                 </td>
-                <td  className="text-center"><Button variant="danger"  disabled={this.state.loading  && this.props.loading} onClick={this.unAssignRequest} >unAssign
-                {(this.state.loading && this.props.loading) ?
-                    <Spinner
-                        as="span"
-                        animation="grow"
-                        size="sm"
-                        role="status"
-                        aria-hidden="true"
-                        className="ml-1 mr-1 "
-                        />:null}
-                </Button></td>
+                <td  className="text-center">
+                            <DropdownButton
+                                as={ButtonGroup}
+                                key={"0"}
+                                id={'service'}
+                                variant={'danger'}
+                                title={currentStatus}
+                                disabled={this.state.loading  && this.props.loading} 
+                                className="mr-2">
+                                    {currentStatus==='ASSIGNED'?
+                                    <>
+                                        <Dropdown.Item eventKey="1" onClick={()=>{this.openModal('INPROGRESS')}}>IN PROGRESS</Dropdown.Item>
+                                        <Dropdown.Item eventKey="2" onClick={()=>{this.openModal('UNASSIGNED')}}>UNASSIGN</Dropdown.Item>
+                                    </>
+                                    :currentStatus==='INPROGRESS' ? 
+                                    <>
+                                        <Dropdown.Item eventKey="1" onClick={()=>{this.openModal('CLOSED')}}>CLOSE</Dropdown.Item>
+                                        <Dropdown.Item eventKey="2" onClick={()=>{this.openModal('UNASSIGNED')}}>UNASSIGN</Dropdown.Item>
+                                    </>
+                                    :null}
+                              
+                            </DropdownButton>
+                            {(this.state.loading && this.props.loading) ?
+                                    <Spinner
+                                        as="span"
+                                        animation="grow"
+                                        size="sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                        className="ml-1 mr-1 "
+                                        />:null}
+                    {/* <Button variant="danger"  disabled={this.state.loading  && this.props.loading} onClick={this.unAssignRequest} >unAssign
+                
+                </Button> */}
+                </td>
             </tr>
             
                 {this.state.toShowView ? 
@@ -208,6 +257,8 @@ class AssignedCasesRow extends React.Component {
                     </td>
                 </tr>
                 :null}
+                {this.state.openStatusChangeModal ? 
+                <ChangeStatusModal title={'Changing status from '+currentStatus+' to ' + this.state.status} show={this.state.openStatusChangeModal} handleClose={this.closeStatusChangeModal} confirm={this.confirmStatusChange}/>:null}
             </>
         )
     }

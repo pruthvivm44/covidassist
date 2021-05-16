@@ -15,7 +15,11 @@ const initState = {
         gotAllCases:false
     },
     requestAssigned:false,
-    requestUnAssigned:false,
+    statusChanged:false,
+    successModalState:{
+        title:'',
+        body:''
+    },
     allCasesPagination:{
         currentPageNumber:null,
         pageSize:null,
@@ -115,54 +119,65 @@ const VolunteerReducer = (state = initState,action) => {
             }
         return {...state,requestAssigned:true,loading:false,cases:newCases2}
 
-        case 'VOLUNTEER_REQUEST_UNASSIGNED':
-            let requestId1 = action.payload.requestId;
-            let volunteerId1 = action.payload.volunteerId;
-            
+        case 'STATUS_CHANGED':
+            let requestId1 = action.payload.requestId;            
             let oldCases3 = state.cases;
             let oldAssignedCases1 = oldCases3.assignedCases;
             let oldAssignedCases1Content = oldAssignedCases1.content;
-            let oldAllCases1 = oldCases3.allCases;
-            let oldAllCasesContentArr = oldAllCases1.content;
 
-            let oldAssignedCasesContentObj = oldAssignedCases1Content.filter(data =>{
-                return data.requestId === requestId1
-            });
-            let oldRequestStatus1 =  oldAssignedCasesContentObj[0].requestStatus;
-            let statusToPush1 = {
-                "status": "UNASSIGNED",
-                "volunteerId": volunteerId1,
-                "updatedBy": volunteerId1,
-                "eventTime": new Date(),
-                "comments": "Request UN Assigned from volunteer ::"+volunteerId1
+            if(action.payload.reqStatus.status==='UNASSIGNED'){
+                let newAssignedCasesContent = oldAssignedCases1Content.filter(data =>{
+                    return data.requestId !== requestId1
+                });
+                let newAssignedCases1 = {
+                    ...oldAssignedCases1,
+                    content:newAssignedCasesContent
+                }; 
+                let newCases3 = {
+                    ...oldCases3,
+                    assignedCases:newAssignedCases1,
+                };
+                let newSuccessModalState = {
+                    title:'Status Changed',
+                    body:action.payload.reqStatus.status+' successfully'
+                };
+                return {...state,statusChanged:true,loading:false,cases:newCases3,successModalState:newSuccessModalState}
+            }else{
+                let oldAssignedCasesContentObj = oldAssignedCases1Content.filter(data =>{
+                    return data.requestId === requestId1
+                });
+    
+                let oldRequestStatus1 =  oldAssignedCasesContentObj[0].requestStatus;
+                let statusToPush1 = action.payload.reqStatus;
+                oldRequestStatus1.push(statusToPush1);
+                let contentObjToUpdateIndex1 = oldAssignedCases1Content.findIndex((data) => {
+                    return data.requestId === requestId1
+                });
+    
+                if(contentObjToUpdateIndex1 >= 0){
+                    const contentSlice1 =  oldAssignedCases1Content.slice();
+                    const contentToupdate = contentSlice1[contentObjToUpdateIndex1];
+                    const updateUnitContent1 = {
+                        ...contentToupdate,
+                        requestStatus:oldRequestStatus1,
+                        currentStatus:action.payload.reqStatus.status
+                    }
+                    contentSlice1[contentObjToUpdateIndex1] = updateUnitContent1;
+                    let newAssignedCases6 = {
+                        ...oldAssignedCases1,
+                        content:contentSlice1
+                    };
+    
+                    let newCases6={
+                        ...oldCases3,
+                        assignedCases:newAssignedCases6
+                    }
+                    return {...state,cases:newCases6,loading:false}
+                }
+                else{
+                    return {...state,loading:false}
+                }
             }
-            oldRequestStatus1.push(statusToPush1);
-            let newContentObjToPush = {
-                ...oldAssignedCasesContentObj[0],
-                requestStatus:oldRequestStatus1,
-                currentStatus:'UNASSIGNED'
-            };
-            oldAllCasesContentArr.push(newContentObjToPush);
-            let newAllCases1 =  {
-                ...oldAllCases1,
-                content:oldAllCasesContentArr
-            };
-            /*------------------------------------------------- */
-
-            let newAssignedCasesContent = oldAssignedCases1Content.filter(data =>{
-                return data.requestId !== requestId1
-            });
-            let newAssignedCases1 = {
-                ...oldAssignedCases1,
-                content:newAssignedCasesContent
-            }; 
-
-            let newCases3 = {
-                ...oldCases3,
-                assignedCases:newAssignedCases1,
-                allCases:newAllCases1
-            }
-        return {...state,requestUnAssigned:true,loading:false,cases:newCases3}
 
         case 'MAKE_ALL_CASES_NULL':
             let oldCases4 = state.cases;
@@ -218,7 +233,11 @@ const VolunteerReducer = (state = initState,action) => {
             }
 
         case 'MAKE_REQUEST_ASSIGNED_FALSE':
-        return {...state,requestAssigned:false,requestUnAssigned:false,loading:false}
+            let newSuccessModalState1 = {
+                title:'',
+                body:''
+            };
+        return {...state,requestAssigned:false,statusChanged:false,loading:false,successModalState:newSuccessModalState1}
 
         case 'SHOW_VOLUNTEER_LOADING':
         return {...state,loading:true}
