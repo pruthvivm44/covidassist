@@ -3,12 +3,14 @@ import PatientReducer from './patientRequestReducer'
 import { firebaseReducer } from 'react-redux-firebase'
 import authReducer from './authReducer'
 import VolunteerReducer from './volunteerReducer'
+import LeadReducer from './leadReducer'
 
 const rootReducer = combineReducers({
     auth: authReducer,
     patient: PatientReducer,
     firebase: firebaseReducer,
-    volunteer:VolunteerReducer
+    volunteer:VolunteerReducer,
+    leads:LeadReducer
 });
 
 export default rootReducer;

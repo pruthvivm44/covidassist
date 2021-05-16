@@ -223,7 +223,6 @@ class PatientForm extends React.Component {
         });
     }
     onChangeState = (data)=>{
-        console.log( data.target.value)
         if(data.target.value==='null'){
             this.setState({
                 stateName:null,
