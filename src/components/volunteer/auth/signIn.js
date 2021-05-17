@@ -67,68 +67,68 @@ class SignIn extends React.Component {
             <>
             <div id="recaptcha-container"></div>
             <Container>
+                
                 <Row>
-                    <Col md={12} className="mt-3 mb-3">
-                        <h4>VOLUNTEER LOGIN</h4>
-                        <div className="pinkBorder"></div>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col md={6}>
-                        <Card className="p-5">
-                            <div  className="text-center">
-                                <h3>LOGIN NOW</h3>
-                            </div>
-                            <Form.Group controlId="priMobileNo" className="mt-3">
-                                <Form.Control value={this.state.telephone} type="number" placeholder="Mobile Number" onChange={this.onHandleTelephoneChange} maxLength={10}/>
-                            </Form.Group>
-                            {(this.props.authStatus === 'OTP Requested' || this.props.authStatus === 'OTP Incorrect') ?
-                            <>
-                              <Form.Group controlId="otp">
-                                    <Form.Control maxLength="6" name="otp" value={this.state.otp} onChange={this.otpChange} placeholder="Enter Your OTP" aria-label="mobnumber" aria-describedby="basic-addon1"/>
+                    <Col md={6} className="p-3">
+                        <div className="">
+                            <h4>VOLUNTEER LOGIN</h4>
+                            <div className="pinkBorder"></div>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-center h-100">
+                            <Card className="p-5  w-100">
+                                <div  className="text-center">
+                                    <h3>LOGIN NOW</h3>
+                                </div>
+                                <Form.Group controlId="priMobileNo" className="mt-3">
+                                    <Form.Control value={this.state.telephone} type="number" placeholder="Mobile Number" onChange={this.onHandleTelephoneChange} maxLength={10}/>
                                 </Form.Group>
-                                <Button disabled={this.props.loading} variant="danger" type="submit" onClick={this.confirmCode}>Submit OTP</Button>
-                            </>:
-                            <>
-                                <Button disabled={this.props.loading} variant="danger" type="submit" onClick={this.requestOTP}>Request OTP</Button>
-                            </>
-                            }
-                            {this.props.authStatus==='SMS_NOT_SENT'?
-                            <>
-                                   <Alert className="mt-3" variant="danger">
-                                        Could not send the OTP please check your phone number and try again .
-                                    </Alert>
-                            </>
-                            :
-                            null
-                            }
-                            {this.props.authStatus==='OTP Incorrect'?
-                            <>
-                                   <Alert className="mt-3" variant="danger">
-                                        InCorrect OTP Please check.
-                                    </Alert>
-                            </>
-                            :
-                            null
-                            }
-                            {this.props.loading ? 
-                                <Container>
-                                    <Row >
-                                        <Col md={12}>
-                                            <div className="text-center mt-4">
-                                                <Spinner className="loading" animation="grow" variant="danger"/>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                            </Container>
-                            :null}
-                          
-                        </Card>
+                                {(this.props.authStatus === 'OTP Requested' || this.props.authStatus === 'OTP Incorrect') ?
+                                <>
+                                <Form.Group controlId="otp">
+                                        <Form.Control maxLength="6" name="otp" value={this.state.otp} onChange={this.otpChange} placeholder="Enter Your OTP" aria-label="mobnumber" aria-describedby="basic-addon1"/>
+                                    </Form.Group>
+                                    <Button disabled={this.props.loading} variant="danger" type="submit" onClick={this.confirmCode}>Submit OTP</Button>
+                                </>:
+                                <>
+                                    <Button disabled={this.props.loading} variant="danger" type="submit" onClick={this.requestOTP}>Request OTP</Button>
+                                </>
+                                }
+                                {this.props.authStatus==='SMS_NOT_SENT'?
+                                <>
+                                    <Alert className="mt-3" variant="danger">
+                                            Could not send the OTP please check your phone number and try again .
+                                        </Alert>
+                                </>
+                                :
+                                null
+                                }
+                                {this.props.authStatus==='OTP Incorrect'?
+                                <>
+                                    <Alert className="mt-3" variant="danger">
+                                            InCorrect OTP Please check.
+                                        </Alert>
+                                </>
+                                :
+                                null
+                                }
+                                {this.props.loading ? 
+                                    <Container>
+                                        <Row >
+                                            <Col md={12}>
+                                                <div className="text-center mt-4">
+                                                    <Spinner className="loading" animation="grow" variant="danger"/>
+                                                </div>
+                                            </Col>
+                                        </Row>
+                                </Container>
+                                :null}
+                            </Card>
+                        </div>
                     </Col>
-                    <Col md={6}  className="text-center">
-                        <Card>
-                            <Image src={volImage} />
-                        </Card>
+                    <Col md={6}  className="text-center d-flex align-items-center p-3" >
+                        <div className="text-center">
+                            <Image src={volImage} alt="covid Assist india image" width="70%"/>
+                        </div>
                     </Col>
                 </Row>
             </Container>
