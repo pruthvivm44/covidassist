@@ -30,16 +30,16 @@ class Helped extends React.Component {
                                 </Row>
                                 <Row className="py-2 d-flex align-items-center">
                             <Col md={12} className="text-center mt-1 mb-1">
-                            <a className="socialmd" href="https://www.facebook.com/WaterDuct-112494253800332/" rel="noopener noreferrer" target="_blank"  >
+                            {/* <a className="socialmd" href="https://www.facebook.com/WaterDuct-112494253800332/" rel="noopener noreferrer" target="_blank"  >
                                     <FontAwesomeIcon className="m-4 redColor" icon={faFacebookF} />
-                             </a>
-                                <a className="socialmd" href="https://twitter.com/TheWaterDuct" rel="noopener noreferrer" target="_blank" >
+                             </a> */}
+                                <a className="socialmd" href="https://twitter.com/covidAssistInd" rel="noopener noreferrer" target="_blank" >
                                     <FontAwesomeIcon className="m-4 redColor" icon={faTwitter} />
                                 </a>
-                                <a className="socialmd " href="https://www.linkedin.com/company/waterduct" rel="noopener noreferrer" target="_blank" >
+                                {/* <a className="socialmd " href="https://www.linkedin.com/company/waterduct" rel="noopener noreferrer" target="_blank" >
                                     <FontAwesomeIcon className="m-4 redColor" icon={faLinkedinIn} />
-                                </a>
-                                <a className="socialmd" href="https://www.instagram.com/waterduct/" rel="noopener noreferrer" target="_blank" >
+                                </a> */}
+                                <a className="socialmd" href="https://www.instagram.com/covidassistindia/" rel="noopener noreferrer" target="_blank" >
                                     <FontAwesomeIcon className="m-4 redColor" icon={faInstagram} />
                                 </a>
                                 {/* <a className="socialmd" href="# " rel="noopener noreferrer" target="_blank" >

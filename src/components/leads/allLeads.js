@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container,Row,Col,DropdownButton,Dropdown,ButtonGroup } from 'react-bootstrap';
+import { Container,Row,Col,DropdownButton,Dropdown,ButtonGroup, Button,Table } from 'react-bootstrap';
 import {StatesAndDistricts}  from '../shared/statesAndDistricts'
 import { connect } from 'react-redux';
 import { getAllLeads } from '../../store/actions/leadAction'
@@ -128,7 +128,6 @@ class AllLeads extends React.Component {
         });
     }
     onLeadStatusChange = (status)=>{
-        console.log(status)
         if(!status){
             let data ={
                 ...this.state.filterData,
@@ -152,6 +151,24 @@ class AllLeads extends React.Component {
                 this.props.getAllLeads(data);
             });
         }
+    }
+    clearFilter = ()=>{
+        let stateData ={
+            ...this.state.filterData,
+            status:['true','false'].toString()
+        };
+        delete stateData.state;
+        delete stateData.district;
+        delete stateData.leadTypes;
+        this.setState({
+            selectedState:null,
+            filterData:stateData,
+            selectedDistrict:null,
+            districtArray:[],
+            leadTypes:null,
+        },()=>{
+            this.props.getAllLeads(stateData);
+        });
     }
     render(){
         if(this.props.allLeads){
@@ -213,6 +230,7 @@ class AllLeads extends React.Component {
                                 <Dropdown.Item eventKey="2" onClick={()=>{this.onLeadStatusChange('VERIFIED')}}>Verified</Dropdown.Item>
                                 <Dropdown.Item eventKey="3" onClick={()=>{this.onLeadStatusChange('NOT VERIFIED')}}>Not Verified</Dropdown.Item>
                             </DropdownButton>
+                            <Button variant={'secondary'} onClick={this.clearFilter}>Clear all Filters</Button>
                         </Row>
                         <Row className="p-5">
                             <Col md={12} className="text-center">
@@ -224,6 +242,7 @@ class AllLeads extends React.Component {
                 )
             }else{
                 return(
+                    <>
                     <Container fluid>
                     <Row className="mt-3 mb-3">
                             <DropdownButton
@@ -280,16 +299,37 @@ class AllLeads extends React.Component {
                                 <Dropdown.Item eventKey="2" onClick={()=>{this.onLeadStatusChange('true')}}>Verified</Dropdown.Item>
                                 <Dropdown.Item eventKey="3" onClick={()=>{this.onLeadStatusChange('false')}}>Not Verified</Dropdown.Item>
                             </DropdownButton>
+                            <Button variant={'secondary'} onClick={this.clearFilter}>Clear Filters</Button>
+
                     </Row>
+                    </Container>
+                    <Table striped bordered hover>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Service Type</th>
+                                <th >Verified Status</th>
+                                <th>Stock available</th>
+                                <th>Contact Name</th>
+                                <th>Primary Mobile</th>
+                                <th>State</th>
+                                <th>District</th>
+                                <th className="text-center">View</th>
+                                <th className="text-center">Action</th>
+                            </tr>                
+                        </thead>
+                        <tbody>
                     {this.props.allLeads.content.map((data,i) =>{
                         return(
                             <SingleLead data={data}  key={i} index={i+1} />
                         )
                     })}
+                    </tbody>
+                    </Table>
                      <div className="text-center d-flex justify-content-center">
                         <CasesPagination data={this.props.allLeadsPagination} navigateToPage={this.navigateToPage}/>
                     </div>
-                </Container>
+                    </>
                 )
             }
         }else{

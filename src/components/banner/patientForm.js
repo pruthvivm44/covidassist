@@ -83,7 +83,7 @@ class PatientForm extends React.Component {
         }
     }
     onPatAgeChange = (e)=>{
-        if(e.target.value<=0){
+        if(e.target.value<=0 || e.target.value.length>2){
             alert('Enter a valid Age');
         }else{
             this.setState({
@@ -109,14 +109,22 @@ class PatientForm extends React.Component {
     }
     onPriMobNoChange = (e)=>{
         let telephone = e.target.value;
-        if (telephone === '' || this.state.regexp.test(telephone)) {
-            this.setState({ priMobNo: telephone });
+        if(e.target.value.length>10){
+            alert('Phone number cannot be more than 10 digits');
+        }else{
+            if (telephone === '' || this.state.regexp.test(telephone)) {
+                this.setState({ priMobNo: telephone });
+            }
         }
     }
     onSecMobNoChange = (e)=>{
         let telephone = e.target.value;
-        if (telephone === '' || this.state.regexp.test(telephone)) {
-            this.setState({ secMobNo: telephone });
+        if(e.target.value.length>10){
+            alert('Phone number cannot be more than 10 digits');
+        }else{
+            if (telephone === '' || this.state.regexp.test(telephone)) {
+                this.setState({ secMobNo: telephone });
+            }
         }
     }
     relWithPatChange = (e)=>{
@@ -511,13 +519,13 @@ class PatientForm extends React.Component {
                     <Row>
                         <Col md={4}>
                             <Form.Group controlId="ptName">
-                                <Form.Label>Patient Name</Form.Label>
+                                <Form.Label>Patient Name <span className="redColor">*</span></Form.Label>
                                 <Form.Control type="text" value={this.state.patientName} placeholder="Enter Patient Name" onChange={this.onPatientNameChange} />
                             </Form.Group>
                         </Col>
                         <Col md={4}>
                             <Form.Group controlId="srfId">
-                                <Form.Label>SRF_ID</Form.Label>
+                                <Form.Label >SRF_ID</Form.Label>
                                 <Form.Control type="text" value={this.state.srf_id} placeholder="SRF_ID ( Optional )" onChange={this.onSrfIdChange}/>
                             </Form.Group>
                         </Col>
@@ -531,7 +539,7 @@ class PatientForm extends React.Component {
                     <Row>
                         <Col md={4}>
                             <Form.Group>
-                                <Form.Label> Covid Test Result</Form.Label>
+                                <Form.Label> Covid Test Result <span className="redColor">*</span></Form.Label>
                                 <Form.Control
                                     as="select"
                                     className="mr-sm-2"
@@ -547,7 +555,7 @@ class PatientForm extends React.Component {
                         </Col>
                         <Col md={4}>
                             <Form.Group>
-                            <Form.Label> Vaccination Taken ?</Form.Label>
+                            <Form.Label> Vaccination Taken ? <span className="redColor">*</span></Form.Label>
                                 <Form.Control
                                     as="select"
                                     className="mr-sm-2"
@@ -562,7 +570,7 @@ class PatientForm extends React.Component {
                         </Col>
                         <Col md={4}>
                             <Form.Group controlId="ptAge">
-                                <Form.Label>Patient Age</Form.Label>
+                                <Form.Label>Patient Age <span className="redColor">*</span></Form.Label>
                                 <Form.Control type="number" value={this.state.patAge} placeholder="age" onChange={this.onPatAgeChange}/>
                             </Form.Group>
                         </Col>
@@ -570,7 +578,7 @@ class PatientForm extends React.Component {
                     <Row>
                         <Col md={4}>
                             <Form.Group>
-                                <Form.Label>Patient Gender</Form.Label>
+                                <Form.Label>Patient Gender <span className="redColor">*</span></Form.Label>
                                 <Form.Control
                                     as="select"
                                     className="mr-sm-2"
@@ -586,13 +594,13 @@ class PatientForm extends React.Component {
                         </Col>
                         <Col md={4}>
                             <Form.Group controlId="ctName">
-                                <Form.Label>Care Taker Name</Form.Label>
+                                <Form.Label>Care Taker Name <span className="redColor">*</span></Form.Label>
                                 <Form.Control type="text" value={this.state.careTakerName} placeholder="Care Taker Name" onChange={this.oncareTakeNameChange}/>
                             </Form.Group>
                         </Col>
                         <Col md={4}>
                             <Form.Group controlId="priMobileNo">
-                                <Form.Label>Primary Mobile Number</Form.Label>
+                                <Form.Label>Primary Mobile Number <span className="redColor">*</span></Form.Label>
                                 <Form.Control value={this.state.priMobNo} type="number" placeholder="Primary Mobile Number" onChange={this.onPriMobNoChange} maxLength={10}/>
                             </Form.Group>
                         </Col>
@@ -612,7 +620,7 @@ class PatientForm extends React.Component {
                         </Col>
                         <Col md={4}>
                             <Form.Group controlId="admitToHos">
-                                <Form.Label >Admitted to Hospital</Form.Label>
+                                <Form.Label >Admitted to Hospital <span className="redColor">*</span></Form.Label>
                                 <Form.Control
                                     as="select"
                                     className="mr-sm-2"
@@ -643,37 +651,9 @@ class PatientForm extends React.Component {
                         </>:null}
                     </Row>
                     <Row>
-                        <Col md={12}>
-                            <Form.Group controlId="addressLine1">
-                                <Form.Label>Address </Form.Label>
-                                <Form.Control as="textarea" value={this.state.address} rows={3} placeholder="Address" onChange={this.onAddressChange}/>
-                            </Form.Group>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md={4}>
-                            <Form.Group controlId="landMark">
-                                <Form.Label>Land Mark</Form.Label>
-                                <Form.Control type="text" placeholder="Land Mark ( Optional )" onChange={this.onLandMarkChange} />
-                            </Form.Group>
-                        </Col>
-                        <Col md={4}>
-                            <Form.Group controlId="city">
-                                <Form.Label>City</Form.Label>
-                                <Form.Control value={this.state.city} type="text" placeholder="City" onChange={this.onCityChange} />
-                            </Form.Group>
-                        </Col>
-                        <Col md={4}>
-                            <Form.Group controlId="pincode">
-                                <Form.Label>Pincode</Form.Label>
-                                <Form.Control type="number" value={this.state.pincode} placeholder="Pincode" onChange={this.onPincodeChange} />
-                            </Form.Group>
-                        </Col>
-                    </Row>
-                    <Row>
                         <Col md={4}>
                             <Form.Group controlId="changeState">
-                                <Form.Label >Select your State</Form.Label>
+                                <Form.Label >Select your State <span className="redColor">*</span></Form.Label>
                                 <Form.Control
                                     as="select"
                                     className="mr-sm-2"
@@ -689,7 +669,7 @@ class PatientForm extends React.Component {
                         {this.state.districtArray.length!==0 ?
                         <Col md={4}>
                             <Form.Group controlId="changeState">
-                                <Form.Label >Select your District</Form.Label>
+                                <Form.Label >Select your District <span className="redColor">*</span></Form.Label>
                                 <Form.Control
                                     as="select"
                                     className="mr-sm-2"
@@ -706,8 +686,36 @@ class PatientForm extends React.Component {
                     </Row>
                     <Row>
                         <Col md={12}>
+                            <Form.Group controlId="addressLine1">
+                                <Form.Label>Address <span className="redColor">*</span></Form.Label>
+                                <Form.Control as="textarea" value={this.state.address} rows={3} placeholder="Address" onChange={this.onAddressChange}/>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={4}>
+                            <Form.Group controlId="landMark">
+                                <Form.Label>Land Mark <span className="redColor">*</span></Form.Label>
+                                <Form.Control type="text" placeholder="Land Mark ( Optional )" onChange={this.onLandMarkChange} />
+                            </Form.Group>
+                        </Col>
+                        <Col md={4}>
+                            <Form.Group controlId="city">
+                                <Form.Label>City <span className="redColor">*</span></Form.Label>
+                                <Form.Control value={this.state.city} type="text" placeholder="City" onChange={this.onCityChange} />
+                            </Form.Group>
+                        </Col>
+                        <Col md={4}>
+                            <Form.Group controlId="pincode">
+                                <Form.Label>Pincode <span className="redColor">*</span></Form.Label>
+                                <Form.Control type="number" value={this.state.pincode} placeholder="Pincode" onChange={this.onPincodeChange} />
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={12}>
                             <Form.Group controlId="changeState">
-                                <Form.Label >Service Required</Form.Label>
+                                <Form.Label >Service Required <span className="redColor">*</span></Form.Label>
                                 <Form.Control
                                     as="select"
                                     className="mr-sm-2"

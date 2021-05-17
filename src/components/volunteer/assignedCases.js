@@ -79,7 +79,7 @@ class AssignedCases extends React.Component {
                             {this.props.assignedCases.content.map((data,i) =>{
                                 // if(data.currentStatus==='Open'){
                                     return(
-                                        <AssignedCasesRow data={data}  key={i} addComment={this.addComment} confirmStatusChangeNow={this.confirmStatusChangeNow} index={i} />
+                                        <AssignedCasesRow data={data} index={i+1}  key={i} addComment={this.addComment} confirmStatusChangeNow={this.confirmStatusChangeNow} />
                                     )
                                 // }
                             })}

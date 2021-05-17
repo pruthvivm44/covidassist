@@ -61,7 +61,7 @@ class AssignedCasesRow extends React.Component {
         return(
             <>
             <tr>    
-                <td>1</td>
+                <td>{this.props.index}</td>
                 <td>{this.props.data.patientDetails.name}</td>
                 <td>{this.props.data.careTakerDetails.primaryMobile}</td>
                 <td>{this.props.data.careTakerDetails.name}</td> 
@@ -121,7 +121,7 @@ class AssignedCasesRow extends React.Component {
             </tr>
             
                 {this.state.toShowView ? 
-                <tr>
+                <tr className="onHoverBackWhite">
                     <td colSpan={12}><Container fluid>
                         <Row>
                             <Col >

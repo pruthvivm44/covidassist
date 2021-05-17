@@ -1,5 +1,5 @@
 import React from 'react';
-import {Table,Container,Row,Col, DropdownButton ,Dropdown,ButtonGroup} from 'react-bootstrap';
+import {Table,Container,Row,Col, DropdownButton ,Dropdown,ButtonGroup,Button} from 'react-bootstrap';
 import { connect } from 'react-redux'
 import { getAllCases } from '../../store/actions/volunteerAction'
 import { assignRequest } from '../../store/actions/volunteerAction'
@@ -140,6 +140,24 @@ class AllCases extends React.Component {
             this.props.getAllCases(data);
         });
     }
+    clearFilter = ()=>{
+        let stateData ={
+            ...this.state.filterData,
+            status:['OPEN','UNASSIGNED'].toString()
+        };
+        delete stateData.state;
+        delete stateData.district;
+        delete stateData.serviceTypes;
+        this.setState({
+            selectedState:null,
+            filterData:stateData,
+            selectedDistrict:null,
+            districtArray:[],
+            selectedService:null,
+        },()=>{
+            this.props.getAllCases(stateData);
+        });
+    }
     render(){
         if(this.props.allCases){
             if(this.props.allCases.content.length===0){
@@ -190,6 +208,8 @@ class AllCases extends React.Component {
                                     ))}
                                 </DropdownButton>
                                 :null}
+                            <Button variant={'secondary'} onClick={this.clearFilter}>Clear all Filters</Button>
+
                         </Row>
                     </Container>
                     <Container>
@@ -252,6 +272,8 @@ class AllCases extends React.Component {
                                     ))}
                                 </DropdownButton>
                                 :null}
+                            <Button variant={'secondary'} onClick={this.clearFilter}>Clear all Filters</Button>
+
                         </Row>
                     </Container>
                     <Table striped bordered hover>

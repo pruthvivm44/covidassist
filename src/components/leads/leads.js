@@ -15,12 +15,12 @@ class Leads extends React.Component {
                 </Row>
                 <Row>
                     <Col md={12}>
-                        <Tabs defaultActiveKey="addALead" id="uncontrolled-tab-example">
-                            <Tab eventKey="addALead" title="Add Lead" tabClassName="black hoverred">
-                                <AddLead />
-                            </Tab>
+                        <Tabs defaultActiveKey="allLeads" id="uncontrolled-tab-example">
                             <Tab eventKey="allLeads" title="Leads" tabClassName="black hoverred">
                                 <AllLeads />
+                            </Tab>
+                            <Tab eventKey="addALead" title="Add Lead" tabClassName="black hoverred">
+                                <AddLead />
                             </Tab>
                         </Tabs>
                     </Col>
