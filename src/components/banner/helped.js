@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col,Card} from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faFacebookF, faTwitter, faLinkedinIn, faInstagram} from '@fortawesome/free-brands-svg-icons'
+import { faTwitter, faInstagram} from '@fortawesome/free-brands-svg-icons'
 class Helped extends React.Component {
     render(){
         return(

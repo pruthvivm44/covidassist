@@ -309,6 +309,7 @@ class AllLeads extends React.Component {
                                 <th>#</th>
                                 <th>Service Type</th>
                                 <th >Verified Status</th>
+                                <th >Last Updated</th>
                                 <th>Stock available</th>
                                 <th>Contact Name</th>
                                 <th>Primary Mobile</th>

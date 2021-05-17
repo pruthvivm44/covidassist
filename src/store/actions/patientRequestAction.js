@@ -25,7 +25,15 @@ export const patientRequest = (credentials) =>{
             })
             .catch(function (error) {
                 //handle error
-                dispatch({type:'ERROR_ADDING_PATIENT_REQUEST',error});
+                if(error.response){
+                    if(error.response.status===400){
+                        dispatch({type:'PATIENT_REQUEST_EXISTS'})
+                    }else{
+                        dispatch({type:'ERROR_ADDING_PATIENT_REQUEST',error});
+                    }
+                }else{
+                    dispatch({type:'ERROR_ADDING_PATIENT_REQUEST',error});
+                }
             });
     }
 }
