@@ -1,6 +1,6 @@
 import React from 'react';
 import {faCheckCircle, faExclamationCircle,faCaretDown,faCaretRight } from '@fortawesome/free-solid-svg-icons'
-import {Row,Col,Card,Button,Spinner,Container } from 'react-bootstrap';
+import {Row,Col,Button,Spinner,Container } from 'react-bootstrap';
 import UpdateLead from '../leads/updateLead'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from 'react-redux'
@@ -71,6 +71,7 @@ class SingleLead extends React.Component {
                     <h5><FontAwesomeIcon className="ml-2 mr-2" id="verified" icon={faExclamationCircle} color={'#efdc2d'} size={'sm'}/><span style={{fontSize:16}}>Verification Pending</span></h5>
                 }
                 </td>
+                <td>{date.toDateString()} {date.toLocaleTimeString('en-US')}</td>
                 <td>{this.props.data.stockAvailable ? 'Yes' : 'No'}</td>
                 <td>{this.props.data.contactPerson}</td>
                 <td>{this.props.data.primaryMobile}</td>

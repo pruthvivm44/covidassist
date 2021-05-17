@@ -26,6 +26,13 @@ const PatientReducer = (state = initState,action) => {
         }
         return {...state,patientRequest:false,type:null,successOrError:successOrErrorNew1}
 
+        case 'PATIENT_REQUEST_EXISTS':
+            let successOrErrorNew2 = {
+                heading:'Requests exists',
+                body:'Your Request already exists with us .'
+            }
+            return {...state,patientRequest:true,type:'error',successOrError:successOrErrorNew2,loading:false}
+
         case 'SHOW_PATIENT_LOADING':
         return {...state,loading:true}
 

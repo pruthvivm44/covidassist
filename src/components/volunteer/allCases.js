@@ -159,6 +159,7 @@ class AllCases extends React.Component {
         });
     }
     render(){
+        console.log(this.props.errorAssigningRequest )
         if(this.props.allCases){
             if(this.props.allCases.content.length===0){
                 return(
@@ -300,6 +301,9 @@ class AllCases extends React.Component {
                     {this.props.requestAssigned ?
                         <ErrorOrSuccessModal type={'success'} open={this.props.requestAssigned} heading={'Request Assigned'} body={'Thank you for Assigning the request .'} handleClose={this.closeSuccessReqModal}/>
                     :null}
+                    {this.props.errorAssigningRequest ?
+                        <ErrorOrSuccessModal type={'error'} open={this.props.errorAssigningRequest} heading={'Alert'} body={'Request assigned by some other volunteer try assigning other .'} handleClose={this.closeSuccessReqModal}/>
+                    :null}
                     <div className="text-center d-flex justify-content-center">
                         <CasesPagination data={this.props.allCasesPagination} navigateToPage={this.navigateToPage}/>
                     </div>
@@ -326,7 +330,8 @@ const mapStateToProps = (state) => {
         allCases : state.volunteer.cases.allCases,
         requestAssigned : state.volunteer.requestAssigned,
         loading:state.volunteer.loading,
-        allCasesPagination:state.volunteer.allCasesPagination
+        allCasesPagination:state.volunteer.allCasesPagination,
+        errorAssigningRequest:state.volunteer.errorAssigningRequest
     }
 }
 

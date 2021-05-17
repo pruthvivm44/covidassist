@@ -168,7 +168,15 @@ export const assignRequest = (credentials) =>{
                 dispatch(requestAssignedForVolunteer(data));
             })
             .catch(function (error) {
-                dispatch({type:'ERROR_ASSIGNING_REQUEST',error});
+                if(error.response){
+                    if(error.response.status===400){
+                        dispatch({type:'ERROR_ASSIGNING_REQUEST',error});
+                    }else{
+                        dispatch({type:'ERROR_ASSIGNING_REQUEST',error});
+                    }
+                }else{
+                    dispatch({type:'ERROR_ASSIGNING_REQUEST',error});
+                }
             });
     }
 }

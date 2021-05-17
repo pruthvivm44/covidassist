@@ -30,7 +30,8 @@ const initState = {
         pageSize:null,
         totalPages:null,
 
-    }
+    },
+    errorAssigningRequest:false
 }
 
 const VolunteerReducer = (state = initState,action) => {
@@ -237,7 +238,7 @@ const VolunteerReducer = (state = initState,action) => {
                 title:'',
                 body:''
             };
-        return {...state,requestAssigned:false,statusChanged:false,loading:false,successModalState:newSuccessModalState1}
+        return {...state,requestAssigned:false,statusChanged:false,loading:false,successModalState:newSuccessModalState1,errorAssigningRequest:false}
 
         case 'SHOW_VOLUNTEER_LOADING':
         return {...state,loading:true}
@@ -245,6 +246,8 @@ const VolunteerReducer = (state = initState,action) => {
         case 'CLOSE_VOLUNTEER_LOADING':
         return {...state,loading:false}
 
+        case 'ERROR_ASSIGNING_REQUEST':
+        return {...state,errorAssigningRequest:true}
         default:
         return {...state}
     }

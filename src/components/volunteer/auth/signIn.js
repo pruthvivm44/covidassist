@@ -1,10 +1,11 @@
 import React from 'react';
-import { Row, Container, Col,Button,Form,Card,Alert,Spinner} from 'react-bootstrap'
+import { Row, Container, Col,Button,Form,Card,Alert,Spinner, Image} from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { signIn } from '../../../store/actions/authAction'
 import { confirmCode } from '../../../store/actions/authAction'
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import volImage from '../../../images/vol1.png'
 
 class SignIn extends React.Component {
     constructor(props){
@@ -126,7 +127,7 @@ class SignIn extends React.Component {
                     </Col>
                     <Col md={6}  className="text-center">
                         <Card>
-                            <h1>hello</h1>
+                            <Image src={volImage} />
                         </Card>
                     </Col>
                 </Row>
