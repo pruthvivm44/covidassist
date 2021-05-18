@@ -7,14 +7,6 @@ import { connect } from 'react-redux'
 import { signOut } from '../../store/actions/authAction'
 
 class Navibar extends React.Component {
-    scrollToMyRef = () =>{
-        // Get the navbar
-        var navbar = document.getElementById("patient");
-        var offsetTop =  navbar.offsetTop;
-                window.scrollTo({
-                    top:offsetTop, 
-                    behavior:'smooth'})  ;
-    } 
     // run this method to execute scrolling. 
     render(){
         return(
@@ -23,8 +15,7 @@ class Navibar extends React.Component {
                 <Navbar.Toggle color="#000"  aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto"></Nav>
-                    <Nav.Link className="black hoverred" onClick={this.scrollToMyRef}>
-                        PATIENT</Nav.Link>
+                    <Nav.Link className="black hoverred"  to={'/'} as={Link}>HOME</Nav.Link>
                     {this.props.auth.uid ?
                     <NavDropdown title="ACCOUNT" id="basic-nav-dropdown" className="black hoverred">
                         <NavDropdown.Item href="# " to={'/volunteer'} as={Link}>Dashboard</NavDropdown.Item>
