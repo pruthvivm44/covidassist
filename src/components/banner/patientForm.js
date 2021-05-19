@@ -512,7 +512,8 @@ class PatientForm extends React.Component {
                     gender:this.state.patGender,
                     age:this.state.patAge,
                     symptoms:this.state.symptoms,
-                    comorbidities:this.state.coMorbidities
+                    comorbidities:this.state.coMorbidities,
+                    spo2Level:this.state.spo2
                 },
                 careTakerDetails:{
                     name:this.state.careTakerName,

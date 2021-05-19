@@ -60,7 +60,6 @@ class SingleLead extends React.Component {
         });
     }
     render(){
-        console.log(this.props.data)
         let date = new Date(this.props.data.createdAt);
         let date1 = new Date(this.props.data.lastVerifiedAt);
         return(
