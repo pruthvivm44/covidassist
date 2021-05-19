@@ -27,7 +27,8 @@ class SingleLead extends React.Component {
                 updateObj = {
                     ...updateObj,
                     verifiedStatus:data.verifiedLead,
-                    isVerified:data.verifiedLead==='true' ? true :false
+                    isVerified:data.verifiedLead==='true' ? true :false,
+                    lastVerifiedAt:new Date()
                 };
             }
             if(data.stockAvailabilty){
@@ -59,7 +60,9 @@ class SingleLead extends React.Component {
         });
     }
     render(){
+        console.log(this.props.data)
         let date = new Date(this.props.data.createdAt);
+        let date1 = new Date(this.props.data.lastVerifiedAt);
         return(
             <>
             <tr>
@@ -71,7 +74,7 @@ class SingleLead extends React.Component {
                     <h5><FontAwesomeIcon className="ml-2 mr-2" id="verified" icon={faExclamationCircle} color={'#efdc2d'} size={'sm'}/><span style={{fontSize:16}}>Verification Pending</span></h5>
                 }
                 </td>
-                <td>{date.toDateString()} {date.toLocaleTimeString('en-US')}</td>
+                <td>{date1.toDateString()} {date1.toLocaleTimeString('en-US')}</td>
                 <td>{this.props.data.stockAvailable ? 'Yes' : 'No'}</td>
                 <td>{this.props.data.contactPerson}</td>
                 <td>{this.props.data.primaryMobile}</td>

@@ -34,6 +34,8 @@ class AddLead extends React.Component {
                 body:null,
             },
             regexp : /^[0-9\b]+$/,
+            stateData:''
+
         };
     }
     onChangeService = (e)=>{
@@ -89,6 +91,7 @@ class AddLead extends React.Component {
     onChangeState = (data)=>{
         if(data.target.value==='null'){
             this.setState({
+                stateData:data.target.value,
                 stateName:'',
                 districtArray:[]
             });
@@ -96,6 +99,7 @@ class AddLead extends React.Component {
             let distArr = data.target.value.split(',');
             let stateName = distArr.shift();
             this.setState({
+                stateData:data.target.value,
                 stateName:stateName,
                 districtArray:distArr,
                 district:''
@@ -338,6 +342,7 @@ class AddLead extends React.Component {
                 type:null,
                 businessName:'',
                 informationSource:'',
+                stateData:'',
                 successOrError:{
                     heading:null,
                     body:null,
@@ -351,11 +356,14 @@ class AddLead extends React.Component {
             <Container fluid className="mt-3 mb-3">
                 <Row >
                     <Col md={3}>
+                    <Form.Label>Lead type <span className="redColor"> *</span></Form.Label>
+
                         <Form.Group controlId="changeState">
                             <Form.Control
                                 as="select"
                                 custom
-                                onChange={this.onChangeService}>
+                                onChange={this.onChangeService}
+                                value={this.state.serviceSelected ? this.state.serviceSelected :'null'}>
                                         <option value='null'>Select Lead Type</option>
                                         <option value='General Bed Request'>General Bed Request</option>
                                         <option value='Bed with oxygen'>Bed with oxygen</option>
@@ -369,11 +377,13 @@ class AddLead extends React.Component {
                             </Form.Group>
                     </Col>
                     <Col md={3}>
+                    <Form.Label>Lead Verified ? <span className="redColor"> *</span></Form.Label>
                         <Form.Group controlId="isVerified">
                             <Form.Control
                                 as="select"
                                 custom
-                                onChange={this.onChangeLeadVerified}>
+                                onChange={this.onChangeLeadVerified}
+                                value={this.state.verifiedLead ? this.state.verifiedLead :'null'}>
                                         <option value='null'>Lead Verified ?</option>
                                         <option value={true}>Yes</option>
                                         <option value={false}>No</option>
@@ -381,11 +391,13 @@ class AddLead extends React.Component {
                         </Form.Group>
                     </Col>
                     <Col md={3}>
+                    <Form.Label>Stock Available ?<span className="redColor"> *</span></Form.Label>
                         <Form.Group controlId="stockAvailable">
                             <Form.Control
                                 as="select"
                                 custom
-                                onChange={this.onChangeStockAvailability}>
+                                onChange={this.onChangeStockAvailability}
+                                value={this.state.stockAvailabilty ? this.state.stockAvailabilty :'null'}>
                                         <option value='null'>Stock Available ?</option>
                                         <option value='yes'>Yes</option>
                                         <option value='no'>No</option>
@@ -393,6 +405,7 @@ class AddLead extends React.Component {
                         </Form.Group>
                     </Col>
                     <Col md={3}>
+                    <Form.Label>Contact Person Name <span className="redColor"> *</span></Form.Label>
                         <Form.Group controlId="contactPerson">
                             <Form.Control type="text" value={this.state.contactPerson} placeholder="Contact Person Name" onChange={this.contactNameChange} />
                         </Form.Group>
@@ -400,22 +413,26 @@ class AddLead extends React.Component {
                 </Row>
                 <Row>
                     <Col md={3}>
+                        <Form.Label>Primary Mobile<span className="redColor"> *</span></Form.Label>
                         <Form.Group controlId="priMobileNo">
                             <Form.Control value={this.state.priMobNo} type="number" placeholder="Primary Mobile Number" onChange={this.onPriMobNoChange} maxLength={10}/>
                         </Form.Group>
                     </Col>
                     <Col md={3}>
+                        <Form.Label>Secondary Mobile</Form.Label>
                         <Form.Group controlId="secMobileNo">
                             <Form.Control type="number" value={this.state.secMobNo} placeholder="Secondary Mobile Number" onChange={this.onSecMobNoChange} maxLength={10} />
                         </Form.Group>
                     </Col>
                     <Col md={3}>
+                            <Form.Label>Select State ?<span className="redColor"> *</span></Form.Label>
                             <Form.Group controlId="changeState">
                                 <Form.Control
                                     as="select"
                                     className="mr-sm-2"
                                     custom
-                                    onChange={this.onChangeState}>
+                                    onChange={this.onChangeState}
+                                    value={this.state.stateData ? this.state.stateData :'null'}>
                                         <option value='null'>Select State</option>
                                         {StatesAndDistricts.map((data,i)=>(
                                             <option key={i} value={[data.state,data.districts]}>{data.state} </option>
@@ -425,12 +442,14 @@ class AddLead extends React.Component {
                         </Col>
                         {this.state.districtArray.length!==0 ?
                         <Col md={3}>
+                            <Form.Label>Select district ?<span className="redColor"> *</span></Form.Label>
                             <Form.Group controlId="changeState">
                                 <Form.Control
                                     as="select"
                                     className="mr-sm-2"
                                     custom
-                                    onChange={this.onChangeDistrict}>
+                                    onChange={this.onChangeDistrict}
+                                    value={this.state.district ? this.state.district :'null'}>
                                         <option value='null'>Select District</option>
                                         {this.state.districtArray.map((data,i)=>(
                                             <option key={i} value={data}>{data} </option>
@@ -442,6 +461,7 @@ class AddLead extends React.Component {
                 </Row>
                 <Row>
                     <Col md={12}>
+                        <Form.Label>Lead Description </Form.Label>
                         <Form.Group controlId="description">
                             <Form.Control as="textarea" value={this.state.description} rows={3} placeholder="Lead description" onChange={this.onDescriptionChange}/>
                         </Form.Group>
@@ -449,6 +469,7 @@ class AddLead extends React.Component {
                 </Row>
                 <Row>
                     <Col md={12}>
+                        <Form.Label>Address <span className="redColor"> *</span></Form.Label>
                         <Form.Group controlId="addressLine1">
                             <Form.Control as="textarea" value={this.state.address} rows={3} placeholder="Address" onChange={this.onAddressChange}/>
                         </Form.Group>
@@ -456,16 +477,19 @@ class AddLead extends React.Component {
                 </Row>
                 <Row>
                     <Col md={4}>
+                        <Form.Label>Landmark<span className="redColor"> *</span></Form.Label>
                         <Form.Group controlId="landMark">
                             <Form.Control type="text" placeholder="Land Mark ( Optional )" onChange={this.onLandMarkChange} />
                          </Form.Group>
                     </Col>
                     <Col md={4}>
+                        <Form.Label>Place <span className="redColor"> *</span></Form.Label>
                         <Form.Group controlId="city">
-                            <Form.Control value={this.state.city} type="text" placeholder="City" onChange={this.onCityChange} />
+                            <Form.Control value={this.state.city} type="text" placeholder="Place" onChange={this.onCityChange} />
                         </Form.Group>
                     </Col>
                     <Col md={4}>
+                            <Form.Label>Pincode <span className="redColor"> *</span></Form.Label>
                             <Form.Group controlId="pincode">
                                 <Form.Control type="number" value={this.state.pincode} placeholder="Pincode" onChange={this.onPincodeChange} />
                             </Form.Group>
@@ -473,11 +497,13 @@ class AddLead extends React.Component {
                 </Row>
                 <Row>
                     <Col md={6}>
+                        <Form.Label>Business Name</Form.Label>
                          <Form.Group controlId="businessName">
                             <Form.Control type="text" value={this.state.businessName} placeholder="Business Name ( Optional )" onChange={this.businessNameChange} />
                         </Form.Group>
                     </Col>
                     <Col md={6}>
+                        <Form.Label>Information Source</Form.Label>
                         <Form.Group controlId="infoSource">
                             <Form.Control type="text" value={this.state.informationSource} placeholder="Information Source" onChange={this.onInfoSourceChange} />
                         </Form.Group>

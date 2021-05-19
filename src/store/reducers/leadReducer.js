@@ -26,6 +26,13 @@ const LeadReducer = (state = initState,action) => {
             }
             return {...state,leadAdded:true,type:'success',successOrError:successOrErrorNew,loading:false}
     
+        case 'ERROR_ADDING_LEAD_REQUEST':
+            let successOrErrorNew2 = {
+                heading:'Exists',
+                body:'Lead request all ready exists .'
+            }
+            return {...state,leadAdded:true,type:'error',successOrError:successOrErrorNew2,loading:false}
+            
         case 'CLOSE_LEAD_ADDED_SUCCESS_MODAL':
             let successOrErrorNew1 = {
                 heading:null,

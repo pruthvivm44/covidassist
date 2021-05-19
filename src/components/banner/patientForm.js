@@ -42,7 +42,9 @@ class PatientForm extends React.Component {
             },
             coMorbidities:[],
             symptoms:[],
+            spo2:'',
             regexp : /^[0-9\b]+$/,
+            stateData:''
         }
     }
     onPatientNameChange = (e)=>{
@@ -225,14 +227,28 @@ class PatientForm extends React.Component {
             },
             coMorbidities:[],
             symptoms:[],
+            stateData:'',
+            spo2:'',
             regexp : /^[0-9\b]+$/,
         },()=>{
+        document.getElementById("inline-type-symp1").checked = false;
+        document.getElementById("inline-type-symp2").checked = false;
+        document.getElementById("inline-type-symp3").checked = false;
+        document.getElementById("inline-type-symp4").checked = false;
+        document.getElementById("inline-type-symp5").checked = false;
+        document.getElementById("inline-type-symp6").checked = false;
+        document.getElementById("inline-type-symp7").checked = false;
+        document.getElementById("inline-type-1").checked = false;
+        document.getElementById("inline-type-2").checked = false;
+        document.getElementById("inline-type-3").checked = false;
+
             this.props.closePatientReqModal();
         });
     }
     onChangeState = (data)=>{
         if(data.target.value==='null'){
             this.setState({
+                stateData:data.target.value,
                 stateName:null,
                 districtArray:[]
             });
@@ -240,6 +256,7 @@ class PatientForm extends React.Component {
             let distArr = data.target.value.split(',');
             let stateName = distArr.shift();
             this.setState({
+                stateData:data.target.value,
                 stateName:stateName,
                 districtArray:distArr,
                 district:null
@@ -299,6 +316,11 @@ class PatientForm extends React.Component {
                 serviceRequired:e.target.value,
             });
         }
+    }
+    onChangeSpo2 = (e)=>{
+        this.setState({
+            spo2:e.target.value
+        });
     }
     submit = (e)=>{
         e.preventDefault();
@@ -409,7 +431,7 @@ class PatientForm extends React.Component {
                     type:'error',
                     successOrError:{
                         heading:'Required',
-                        body:'Please enter your current city .',
+                        body:'Please enter your current place .',
                     }
                 });
             break;
@@ -457,7 +479,16 @@ class PatientForm extends React.Component {
                     }
                 });
             break;
-
+            case !state.spo2:
+                this.setState({
+                    toShowErrorOrSuccessModal:true,
+                    type:'error',
+                    successOrError:{
+                        heading:'Required',
+                        body:'Please enter your spo2 Level.',
+                    }
+                });
+            break;
             case !state.serviceRequired:
                 this.setState({
                     toShowErrorOrSuccessModal:true,
@@ -468,6 +499,7 @@ class PatientForm extends React.Component {
                     }
                 });
             break;
+
             default: 
             let data = {
                 requestId:null,
@@ -511,7 +543,6 @@ class PatientForm extends React.Component {
             break;
         }
     }
-
     render(){
         return(
             <Container>
@@ -531,8 +562,8 @@ class PatientForm extends React.Component {
                         </Col>
                         <Col md={4}>
                             <Form.Group controlId="buNumber">
-                                <Form.Label>BU Number</Form.Label>
-                                <Form.Control type="text" value={this.state.buNo}  placeholder="BU Number ( Optional )" onChange={this.onBuNoChange} />
+                                <Form.Label>BU/BR/XY - Number</Form.Label>
+                                <Form.Control type="text" value={this.state.buNo}  placeholder="BU/BR/XY - Number" onChange={this.onBuNoChange} />
                             </Form.Group>
                         </Col>
                     </Row>
@@ -545,7 +576,9 @@ class PatientForm extends React.Component {
                                     className="mr-sm-2"
                                     id="covResult"
                                     onChange={this.onCovResChange}
-                                    custom>
+                                    custom
+                                    value={this.state.covRes ? this.state.covRes : "null"}
+                                    >
                                     <option value="null">Choose...</option>
                                     <option value="+ve">+ ve</option>
                                     <option value="-ve">- ve</option>
@@ -561,7 +594,9 @@ class PatientForm extends React.Component {
                                     className="mr-sm-2"
                                     id="vaccTaken"
                                     onChange={this.onVacTakenChange}
-                                    custom>
+                                    custom
+                                    value={this.state.vacTaken ? this.state.vacTaken : "null"}
+                                    >
                                     <option value="null">Choose...</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
@@ -584,7 +619,8 @@ class PatientForm extends React.Component {
                                     className="mr-sm-2"
                                     id="patGender"
                                     onChange={this.onPatGenderChange}
-                                    custom>
+                                    custom
+                                    value={this.state.patGender ? this.state.patGender : "null"}>
                                     <option value="null">Choose...</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
@@ -625,7 +661,8 @@ class PatientForm extends React.Component {
                                     as="select"
                                     className="mr-sm-2"
                                     custom
-                                    onChange={this.onAdmittedToHospitalChange}>
+                                    onChange={this.onAdmittedToHospitalChange}
+                                    value={this.state.admittedToHospital ? this.state.admittedToHospital : "null"}>
                                     <option value="null">Choose...</option>
                                     <option value={'true'}>Yes</option>
                                     <option value={'false'}>No</option>
@@ -658,7 +695,8 @@ class PatientForm extends React.Component {
                                     as="select"
                                     className="mr-sm-2"
                                     custom
-                                    onChange={this.onChangeState}>
+                                    onChange={this.onChangeState}
+                                    value={this.state.stateData ? this.state.stateData :'null'}>
                                         <option value='null'>Select</option>
                                         {StatesAndDistricts.map((data,i)=>(
                                             <option key={i} value={[data.state,data.districts]}>{data.state} </option>
@@ -674,7 +712,8 @@ class PatientForm extends React.Component {
                                     as="select"
                                     className="mr-sm-2"
                                     custom
-                                    onChange={this.onChangeDistrict}>
+                                    onChange={this.onChangeDistrict}
+                                    value={this.state.district ? this.state.district :'null'}>
                                         <option value='null'>Select</option>
                                         {this.state.districtArray.map((data,i)=>(
                                             <option key={i} value={data}>{data} </option>
@@ -683,6 +722,12 @@ class PatientForm extends React.Component {
                             </Form.Group>
                         </Col> 
                         :null}
+                         <Col md={4}>
+                            <Form.Group controlId="spo2">
+                                <Form.Label>SPO2 Level<span className="redColor"> *</span></Form.Label>
+                                <Form.Control type="text" placeholder="Spo2 Level" onChange={this.onChangeSpo2} value={this.state.spo2}/>
+                            </Form.Group>
+                        </Col>
                     </Row>
                     <Row>
                         <Col md={12}>
@@ -701,8 +746,8 @@ class PatientForm extends React.Component {
                         </Col>
                         <Col md={4}>
                             <Form.Group controlId="city">
-                                <Form.Label>City <span className="redColor">*</span></Form.Label>
-                                <Form.Control value={this.state.city} type="text" placeholder="City" onChange={this.onCityChange} />
+                                <Form.Label>Place <span className="redColor">*</span></Form.Label>
+                                <Form.Control value={this.state.city} type="text" placeholder="Place" onChange={this.onCityChange} />
                             </Form.Group>
                         </Col>
                         <Col md={4}>
@@ -720,7 +765,8 @@ class PatientForm extends React.Component {
                                     as="select"
                                     className="mr-sm-2"
                                     custom
-                                    onChange={this.onChangeService}>
+                                    onChange={this.onChangeService}
+                                    value={this.state.serviceRequired ? this.state.serviceRequired :'null'}>
                                         <option value='null'>Select</option>
                                         <option value='General Bed Request'>General Bed Request</option>
                                         <option value='Bed with oxygen'>Bed with oxygen</option>
@@ -730,6 +776,7 @@ class PatientForm extends React.Component {
                                         <option value='Oxygen Concentrator On Rent'>Oxygen Concentrator On Rent</option>
                                         <option value='Medicine'>Medicine</option>
                                         <option value='Nursing Care'>Nursing Care</option>
+                                        <option value='Other'>Other</option>
 
                                 </Form.Control>
                             </Form.Group>
@@ -739,12 +786,13 @@ class PatientForm extends React.Component {
                         <Col md={12}>
                             <Form.Group controlId="symptoms">
                                 <Form.Label>Symptoms ?</Form.Label>
-                                <Form.Check inline label="Fever" type={'checkbox'} id={`inline-type-symp-1`} value={'Fever'} className="ml-3" onChange={this.onSymptomsCheck} />
-                                <Form.Check inline label="Dry cough" type={'checkbox'} id={`inline-type-symp-2`} value={'Dry cough'} className="ml-3" onChange={this.onSymptomsCheck} />
-                                <Form.Check inline label="Tiredness" type={'checkbox'} id={`inline-type-symp-3`} value={'tiredness'} className="ml-3" onChange={this.onSymptomsCheck} />
-                                <Form.Check inline label="Difficulty breathing or shortness of breath" type={'checkbox'} id={`inline-type-symp-4`} value={'Difficulty breathing or shortness of breath'} className="ml-3" onChange={this.onSymptomsCheck} />
-                                <Form.Check inline label="Chest pain or pressure" type={'checkbox'} id={`inline-type-symp-5`} value={'C pain or pressure'} className="ml-3" onChange={this.onSymptomsCheck} />
-                                <Form.Check inline label="Loss of speech or movement" type={'checkbox'} id={`inline-type-symp-6`} value={'Loss of speech or movement'} className="ml-3" onChange={this.onSymptomsCheck} />
+                                <Form.Check inline label="Fever" type={'checkbox'} id={`inline-type-symp1`} value={'Fever'} className="ml-3" onChange={this.onSymptomsCheck} />
+                                <Form.Check inline label="Dry cough" type={'checkbox'} id={`inline-type-symp2`} value={'Dry cough'} className="ml-3" onChange={this.onSymptomsCheck} />
+                                <Form.Check inline label="Tiredness" type={'checkbox'} id={`inline-type-symp3`} value={'tiredness'} className="ml-3" onChange={this.onSymptomsCheck} />
+                                <Form.Check inline label="Difficulty breathing or shortness of breath" type={'checkbox'} id={`inline-type-symp4`} value={'Difficulty breathing or shortness of breath'} className="ml-3" onChange={this.onSymptomsCheck} />
+                                <Form.Check inline label="Chest pain or pressure" type={'checkbox'} id={`inline-type-symp5`} value={'C pain or pressure'} className="ml-3" onChange={this.onSymptomsCheck} />
+                                <Form.Check inline label="Loss of speech or movement" type={'checkbox'} id={`inline-type-symp6`} value={'Loss of speech or movement'} className="ml-3" onChange={this.onSymptomsCheck} />
+                                <Form.Check inline label="Others" type={'checkbox'} id={`inline-type-symp7`} value={'Others'} className="ml-3" onChange={this.onSymptomsCheck} />
                             </Form.Group>
                         </Col>
                     </Row>
@@ -754,6 +802,7 @@ class PatientForm extends React.Component {
                                 <Form.Label>I am already suffering with </Form.Label>
                                 <Form.Check inline label="BP" type={'checkbox'} id={`inline-type-1`} value={'BP'} className="ml-3" onChange={this.onCoMorbitiesChange} />
                                 <Form.Check inline label="Diabetes" type={'checkbox'} id={`inline-type-2`} value={'Diabetes'}className="ml-3" onChange={this.onCoMorbitiesChange}/>
+                                <Form.Check inline label="Others" type={'checkbox'} id={`inline-type-3`} value={'Others'}className="ml-3" onChange={this.onCoMorbitiesChange}/>
                             </Form.Group>
                         </Col>
                     </Row>
