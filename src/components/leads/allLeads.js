@@ -182,7 +182,7 @@ class AllLeads extends React.Component {
                                 id={'service'}
                                 variant={'danger'}
                                 title={this.state.leadTypes ? this.state.leadTypes :'Lead Type - All'}
-                                className="mr-2">
+                                className="mr-2 dropbtn">
                                     <Dropdown.Item eventKey="1" onClick={()=>{this.onServiceChange(null)}}>Clear Filter</Dropdown.Item>
                                     <Dropdown.Item eventKey="2" onClick={()=>{this.onServiceChange('General Bed Request')}}>General Bed Request</Dropdown.Item>
                                     <Dropdown.Item eventKey="3" onClick={()=>{this.onServiceChange('Bed with oxygen')}}>Bed with oxygen</Dropdown.Item>
@@ -199,7 +199,7 @@ class AllLeads extends React.Component {
                                 id={'state'}
                                 variant={'danger'}
                                 title={this.state.selectedState ? this.state.selectedState :'State - All'}
-                                className="mr-2">  
+                                className="mr-2 dropbtn">  
                                 <Dropdown.Item eventKey="2" onClick={()=>{this.onStateChange([null,null])}}>Clear Filter</Dropdown.Item>
                                 {StatesAndDistricts.map((data,i)=>(
                                     <Dropdown.Item eventKey={i} key={i} onClick={()=>{this.onStateChange([data.state,data.districts])}}>{data.state}</Dropdown.Item>
@@ -212,7 +212,7 @@ class AllLeads extends React.Component {
                                 id={'district'}
                                 variant={'danger'}
                                 title={this.state.selectedDistrict ? this.state.selectedDistrict : 'District - All'}
-                                className="mr-2">
+                                className="mr-2 dropbtn">
                                 <Dropdown.Item eventKey="1" onClick={()=>{this.onDistrictChange(null)}}>Clear Filter</Dropdown.Item>
                                 {this.state.districtArray.map((data,i)=>(
                                     <Dropdown.Item eventKey={i} key={i} onClick={()=>{this.onDistrictChange(data)}}>{data}</Dropdown.Item>
@@ -225,7 +225,7 @@ class AllLeads extends React.Component {
                                 id={'district'}
                                 variant={'danger'}
                                 title={this.state.leadStatus ? this.state.leadStatus : 'Lead Status - All'}
-                                className="mr-2">
+                                className="mr-2 dropbtn">
                                 <Dropdown.Item eventKey="1" onClick={()=>{this.onLeadStatusChange(null)}}>Clear Filter</Dropdown.Item>
                                 <Dropdown.Item eventKey="2" onClick={()=>{this.onLeadStatusChange('VERIFIED')}}>Verified</Dropdown.Item>
                                 <Dropdown.Item eventKey="3" onClick={()=>{this.onLeadStatusChange('NOT VERIFIED')}}>Not Verified</Dropdown.Item>
@@ -251,7 +251,7 @@ class AllLeads extends React.Component {
                                 id={'service'}
                                 variant={'danger'}
                                 title={this.state.leadTypes ? this.state.leadTypes :'Lead Type - All'}
-                                className="mr-2">
+                                className="mr-2 dropbtn">
                                     <Dropdown.Item eventKey="1" onClick={()=>{this.onServiceChange(null)}}>Clear Filter</Dropdown.Item>
                                     <Dropdown.Item eventKey="2" onClick={()=>{this.onServiceChange('General Bed Request')}}>General Bed Request</Dropdown.Item>
                                     <Dropdown.Item eventKey="3" onClick={()=>{this.onServiceChange('Bed with oxygen')}}>Bed with oxygen</Dropdown.Item>
@@ -268,7 +268,7 @@ class AllLeads extends React.Component {
                                 id={'state'}
                                 variant={'danger'}
                                 title={this.state.selectedState ? this.state.selectedState :'State - All'}
-                                className="mr-2">  
+                                className="mr-2 dropbtn">  
                                 <Dropdown.Item eventKey="2" onClick={()=>{this.onStateChange([null,null])}}>Clear Filter</Dropdown.Item>
                                 {StatesAndDistricts.map((data,i)=>(
                                     <Dropdown.Item eventKey={i} key={i} onClick={()=>{this.onStateChange([data.state,data.districts])}}>{data.state}</Dropdown.Item>
@@ -281,7 +281,7 @@ class AllLeads extends React.Component {
                                 id={'district'}
                                 variant={'danger'}
                                 title={this.state.selectedDistrict ? this.state.selectedDistrict : 'District - All'}
-                                className="mr-2">
+                                className="mr-2 dropbtn">
                                 <Dropdown.Item eventKey="1" onClick={()=>{this.onDistrictChange(null)}}>Clear Filter</Dropdown.Item>
                                 {this.state.districtArray.map((data,i)=>(
                                     <Dropdown.Item eventKey={i} key={i} onClick={()=>{this.onDistrictChange(data)}}>{data}</Dropdown.Item>
@@ -294,12 +294,12 @@ class AllLeads extends React.Component {
                                 id={'district'}
                                 variant={'danger'}
                                 title={this.state.leadStatus ? this.state.leadStatus : 'Lead Status - All'}
-                                className="mr-2">
+                                className="mr-2 dropbtn">
                                 <Dropdown.Item eventKey="1" onClick={()=>{this.onLeadStatusChange(null)}}>Clear Filter</Dropdown.Item>
                                 <Dropdown.Item eventKey="2" onClick={()=>{this.onLeadStatusChange('true')}}>Verified</Dropdown.Item>
                                 <Dropdown.Item eventKey="3" onClick={()=>{this.onLeadStatusChange('false')}}>Not Verified</Dropdown.Item>
                             </DropdownButton>
-                            <Button variant={'secondary'} onClick={this.clearFilter}>Clear Filters</Button>
+                            <Button variant={'secondary'} className="dropbtn" onClick={this.clearFilter}>Clear Filters</Button>
 
                     </Row>
                     </Container>

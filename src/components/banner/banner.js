@@ -18,21 +18,19 @@ class Banner extends React.Component {
         return(
             <div>
             <Container fluid >
-                <Row>
+                <Row className="mb-4" >
                     <Col md={12} className="text-center ">
-                        <h1 className="pt-3">Let's Contribute together in Breaking the chain</h1>
-                        <h4 className="pt-3 red">Need of Bed, Oxygen, Plasma or any ?</h4>
+                        <h1 className="pt-3 bannerHeading1">Let's Contribute together in Breaking the chain</h1>
+                        <h4 className="pt-3 red bannerHeading2">Need of Bed, Oxygen, Plasma or any ?</h4>
                         <h6 className="pt-1">We are here to help you..!</h6>
                         
                         <Button variant="outline-danger" className="mt-2" onClick={this.scrollToMyRef}>Patient Request</Button>{' '}
                     </Col>
                 </Row>
                 <Row>
-                    <Col md={12}>
-                        <Image src={banner} width="100%" className="p-4" fluid/>
-                    </Col>
+                        <Image src={banner}  fluid alt="banner-image"/>
                 </Row>
-                <Row className="mt-3" id="patient" >
+                <Row className="mt-4" id="patient" >
                     <Col md={12}>
                         <Card>
                             <Card.Body>

@@ -42,7 +42,7 @@ class UpdateLead extends React.Component {
     }
     render(){
         return(
-            <Modal show={this.props.show} onHide={this.props.handleClose}>
+            <Modal show={this.props.show} onHide={this.props.handleClose} centered>
                 <Modal.Header closeButton>
                     <Modal.Title>Update Now</Modal.Title>
                 </Modal.Header>

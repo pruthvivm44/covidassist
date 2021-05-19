@@ -13,11 +13,11 @@ class Helped extends React.Component {
                                 <Row className="p-3">
                                     <Col md="3" className="text-center">
                                         <p className="helpNumber">00</p>
-                                        <h4>Helped Patient's</h4>
+                                        <h4>Total requests</h4>
                                     </Col>
                                     <Col md="3" className="text-center">
                                         <p className="helpNumber">00</p>
-                                        <h4>Patient request's</h4>
+                                        <h4>Helped Patients</h4>
                                     </Col>
                                     <Col md="3" className="text-center">
                                         <p className="helpNumber">00</p>
@@ -25,7 +25,7 @@ class Helped extends React.Component {
                                     </Col>
                                     <Col md="3" className="text-center">
                                         <p className="helpNumber">00</p>
-                                        <h4>Lead's Generated</h4>
+                                        <h4>Total Leads</h4>
                                     </Col>
                                 </Row>
                                 <Row className="py-2 d-flex align-items-center">

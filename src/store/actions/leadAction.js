@@ -42,9 +42,16 @@ export const addLeadRequest = (credentials) =>{
             })
             .catch(function (error) {
                 //handle error
-                console.log(error)
                 dispatch({type:'CLOSE_LEAD_ADDED_SUCCESS_MODAL'})
-                dispatch({type:'ERROR_ADDING_LEAD_REQUEST',error});
+                if(error.response){
+                    if(error.response.status===400){
+                        dispatch({type:'ERROR_ADDING_LEAD_REQUEST',error});
+                    }else{
+                        dispatch({type:'ERROR_ADDING_LEAD_REQUEST',error});
+                    }
+                }else{
+                    dispatch({type:'ERROR_ADDING_LEAD_REQUEST',error});
+                }
             });
     }
 }

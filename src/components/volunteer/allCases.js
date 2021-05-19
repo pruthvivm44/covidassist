@@ -159,7 +159,6 @@ class AllCases extends React.Component {
         });
     }
     render(){
-        console.log(this.props.errorAssigningRequest )
         if(this.props.allCases){
             if(this.props.allCases.content.length===0){
                 return(
@@ -172,7 +171,7 @@ class AllCases extends React.Component {
                                     id={'service'}
                                     variant={'danger'}
                                     title={this.state.selectedService ? this.state.selectedService :'Service Type - All'}
-                                    className="mr-2">
+                                    className="mr-2 dropbtn">
                                         <Dropdown.Item eventKey="1" onClick={()=>{this.onServiceChange(null)}}>Clear Filter</Dropdown.Item>
                                         <Dropdown.Item eventKey="2" onClick={()=>{this.onServiceChange('General Bed Request')}}>General Bed Request</Dropdown.Item>
                                         <Dropdown.Item eventKey="3" onClick={()=>{this.onServiceChange('Bed with oxygen')}}>Bed with oxygen</Dropdown.Item>
@@ -189,7 +188,7 @@ class AllCases extends React.Component {
                                     id={'state'}
                                     variant={'danger'}
                                     title={this.state.selectedState ? this.state.selectedState :'State - All'}
-                                    className="mr-2">  
+                                    className="mr-2 dropbtn">  
                                     <Dropdown.Item eventKey="2" onClick={()=>{this.onStateChange([null,null])}}>Clear Filter</Dropdown.Item>
                                     {StatesAndDistricts.map((data,i)=>(
                                         <Dropdown.Item eventKey={i} key={i} onClick={()=>{this.onStateChange([data.state,data.districts])}}>{data.state}</Dropdown.Item>
@@ -202,14 +201,14 @@ class AllCases extends React.Component {
                                     id={'district'}
                                     variant={'danger'}
                                     title={this.state.selectedDistrict ? this.state.selectedDistrict : 'District - All'}
-                                    className="mr-2">
+                                    className="mr-2 dropbtn">
                                     <Dropdown.Item eventKey="1" onClick={()=>{this.onDistrictChange(null)}}>Clear Filter</Dropdown.Item>
                                     {this.state.districtArray.map((data,i)=>(
                                         <Dropdown.Item eventKey={i} key={i} onClick={()=>{this.onDistrictChange(data)}}>{data}</Dropdown.Item>
                                     ))}
                                 </DropdownButton>
                                 :null}
-                            <Button variant={'secondary'} onClick={this.clearFilter}>Clear all Filters</Button>
+                            <Button variant={'secondary'} className="dropbtn" onClick={this.clearFilter}>Clear all Filters</Button>
 
                         </Row>
                     </Container>
@@ -236,7 +235,7 @@ class AllCases extends React.Component {
                                     id={'service'}
                                     variant={'danger'}
                                     title={this.state.selectedService ? this.state.selectedService :'Service Type - All'}
-                                    className="mr-2">
+                                    className="mr-2 dropbtn">
                                         <Dropdown.Item eventKey="1" onClick={()=>{this.onServiceChange(null)}}>Clear Filter</Dropdown.Item>
                                         <Dropdown.Item eventKey="2" onClick={()=>{this.onServiceChange('General Bed Request')}}>General Bed Request</Dropdown.Item>
                                         <Dropdown.Item eventKey="3" onClick={()=>{this.onServiceChange('Bed with oxygen')}}>Bed with oxygen</Dropdown.Item>
@@ -253,7 +252,7 @@ class AllCases extends React.Component {
                                     id={'state'}
                                     variant={'danger'}
                                     title={this.state.selectedState ? this.state.selectedState :'State - All'}
-                                    className="mr-2">  
+                                    className="mr-2 dropbtn">  
                                     <Dropdown.Item eventKey="2" onClick={()=>{this.onStateChange([null,null])}}>Clear Filter</Dropdown.Item>
                                     {StatesAndDistricts.map((data,i)=>(
                                         <Dropdown.Item eventKey={i} key={i} onClick={()=>{this.onStateChange([data.state,data.districts])}}>{data.state}</Dropdown.Item>
@@ -266,14 +265,14 @@ class AllCases extends React.Component {
                                     id={'district'}
                                     variant={'danger'}
                                     title={this.state.selectedDistrict ? this.state.selectedDistrict : 'District - All'}
-                                    className="mr-2">
+                                    className="mr-2 dropbtn">
                                     <Dropdown.Item eventKey="1" onClick={()=>{this.onDistrictChange(null)}}>Clear Filter</Dropdown.Item>
                                     {this.state.districtArray.map((data,i)=>(
                                         <Dropdown.Item eventKey={i} key={i} onClick={()=>{this.onDistrictChange(data)}}>{data}</Dropdown.Item>
                                     ))}
                                 </DropdownButton>
                                 :null}
-                            <Button variant={'secondary'} onClick={this.clearFilter}>Clear all Filters</Button>
+                            <Button variant={'secondary'} onClick={this.clearFilter} className="dropbtn">Clear all Filters</Button>
 
                         </Row>
                     </Container>

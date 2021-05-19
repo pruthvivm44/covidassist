@@ -101,3 +101,15 @@ footer {
 .onHoverBackWhite :hover{
   background-color: #fff;
 }
+@media only screen and (max-width: 600px) {
+  .bannerHeading1 {
+    font-size: 18px;
+  } 
+  .bannerHeading2 {
+    font-size: 16px;
+  }
+  .dropbtn{
+    margin-top: 5px ;
+    margin-bottom:5px;
+  }
+}
