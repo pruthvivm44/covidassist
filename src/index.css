@@ -113,3 +113,12 @@ footer {
     margin-bottom:5px;
   }
 }
+ .anchor{
+   text-decoration: underline;
+   font-size:25px;
+ }
+ .link{
+  text-decoration: underline;
+  font-size:18px;
+
+ }
