@@ -549,6 +549,40 @@ class PatientForm extends React.Component {
             <Container>
                 <Form>
                     <Row>
+                    <Col md={4}>
+                            <Form.Group controlId="changeState">
+                                <Form.Label >Service Required <span className="redColor">*</span></Form.Label>
+                                <Form.Control
+                                    as="select"
+                                    className="mr-sm-2"
+                                    custom
+                                    onChange={this.onChangeService}
+                                    value={this.state.serviceRequired ? this.state.serviceRequired :'null'}>
+                                        <option value='null'>Select</option>
+                                        <option value='General Bed Request'>General Bed Request</option>
+                                        <option value='Bed with oxygen'>Bed with oxygen</option>
+                                        <option value='ICU Bed + ventilator'>ICU Bed + ventilator</option>
+                                        <option value='Ambulance Service'>Ambulance Service</option>
+                                        <option value='Plasma Request'>Plasma Request</option>
+                                        <option value='Oxygen Concentrator On Rent'>Oxygen Concentrator On Rent</option>
+                                        <option value='Medicine'>Medicine</option>
+                                        <option value='Nursing Care'>Nursing Care</option>
+
+                                        <option value='Bipap Machine on Rent Service'>Bipap Machine on Rent Service</option>
+                                        <option value='Burial / Cremation Service / Hearse Van Service'>Burial / Cremation Service / Hearse Van Service</option>
+                                        <option value='Buy Covid Essentials - Pulse Oximeter, Thermometer, Masks'>Buy Covid Essentials - Pulse Oximeter, Thermometer, Masks</option>
+                                        <option value='Doctor Tele Medical Consultation Service'>Doctor Tele Medical Consultation Service</option>
+                                        <option value='Food Delivery Service - Home Delivery For Covid Affected'>Food Delivery Service - Home Delivery For Covid Affected</option>
+                                        <option value='Free Food Delivery For Poor'>Free Food Delivery For Poor</option>
+                                        <option value='Personal Counselling and Motivation'>Personal Counselling and Motivation</option>
+                                        <option value='Physiotherapist Consultation'>Physiotherapist Consultation</option>
+                                        <option value='Vaccination - Guidance And Centers Availability Help'>Vaccination - Guidance And Centers Availability Help</option>
+
+                                        <option value='Other'>Other</option>
+
+                                </Form.Control>
+                            </Form.Group>
+                        </Col> 
                         <Col md={4}>
                             <Form.Group controlId="ptName">
                                 <Form.Label>Patient Name <span className="redColor">*</span></Form.Label>
@@ -561,14 +595,14 @@ class PatientForm extends React.Component {
                                 <Form.Control type="text" value={this.state.srf_id} placeholder="SRF_ID ( Optional )" onChange={this.onSrfIdChange}/>
                             </Form.Group>
                         </Col>
+                    </Row>
+                    <Row>
                         <Col md={4}>
                             <Form.Group controlId="buNumber">
                                 <Form.Label>BU/BR/XY - Number</Form.Label>
                                 <Form.Control type="text" value={this.state.buNo}  placeholder="BU/BR/XY - Number" onChange={this.onBuNoChange} />
                             </Form.Group>
                         </Col>
-                    </Row>
-                    <Row>
                         <Col md={4}>
                             <Form.Group>
                                 <Form.Label> Covid Test Result <span className="redColor">*</span></Form.Label>
@@ -604,14 +638,14 @@ class PatientForm extends React.Component {
                                 </Form.Control>
                             </Form.Group>
                         </Col>
+                    </Row>
+                    <Row>
                         <Col md={4}>
                             <Form.Group controlId="ptAge">
                                 <Form.Label>Patient Age <span className="redColor">*</span></Form.Label>
                                 <Form.Control type="number" value={this.state.patAge} placeholder="age" onChange={this.onPatAgeChange}/>
                             </Form.Group>
                         </Col>
-                    </Row>
-                    <Row>
                         <Col md={4}>
                             <Form.Group>
                                 <Form.Label>Patient Gender <span className="redColor">*</span></Form.Label>
@@ -635,14 +669,14 @@ class PatientForm extends React.Component {
                                 <Form.Control type="text" value={this.state.careTakerName} placeholder="Care Taker Name" onChange={this.oncareTakeNameChange}/>
                             </Form.Group>
                         </Col>
+                    </Row>
+                    <Row>
                         <Col md={4}>
                             <Form.Group controlId="priMobileNo">
                                 <Form.Label>Primary Mobile Number <span className="redColor">*</span></Form.Label>
                                 <Form.Control value={this.state.priMobNo} type="number" placeholder="Primary Mobile Number" onChange={this.onPriMobNoChange} maxLength={10}/>
                             </Form.Group>
                         </Col>
-                    </Row>
-                    <Row>
                         <Col md={4}>
                             <Form.Group controlId="secMobileNo">
                                 <Form.Label>Secondary Mobile Number</Form.Label>
@@ -655,6 +689,8 @@ class PatientForm extends React.Component {
                                 <Form.Control type="text" value={this.state.relWithPat} placeholder="Relationship with patient ( Optional )" onChange={this.relWithPatChange} />
                             </Form.Group>
                         </Col>
+                    </Row>
+                    <Row>
                         <Col md={4}>
                             <Form.Group controlId="admitToHos">
                                 <Form.Label >Admitted to Hospital <span className="redColor">*</span></Form.Label>
@@ -670,8 +706,6 @@ class PatientForm extends React.Component {
                                 </Form.Control>
                             </Form.Group>
                         </Col>
-                    </Row>
-                    <Row>
                         {this.state.admittedToHospital === 'true' ?  
                         <>
                         <Col md={4}>
@@ -759,40 +793,7 @@ class PatientForm extends React.Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Col md={12}>
-                            <Form.Group controlId="changeState">
-                                <Form.Label >Service Required <span className="redColor">*</span></Form.Label>
-                                <Form.Control
-                                    as="select"
-                                    className="mr-sm-2"
-                                    custom
-                                    onChange={this.onChangeService}
-                                    value={this.state.serviceRequired ? this.state.serviceRequired :'null'}>
-                                        <option value='null'>Select</option>
-                                        <option value='General Bed Request'>General Bed Request</option>
-                                        <option value='Bed with oxygen'>Bed with oxygen</option>
-                                        <option value='ICU Bed + ventilator'>ICU Bed + ventilator</option>
-                                        <option value='Ambulance Service'>Ambulance Service</option>
-                                        <option value='Plasma Request'>Plasma Request</option>
-                                        <option value='Oxygen Concentrator On Rent'>Oxygen Concentrator On Rent</option>
-                                        <option value='Medicine'>Medicine</option>
-                                        <option value='Nursing Care'>Nursing Care</option>
-
-                                        <option value='Bipap Machine on Rent Service'>Bipap Machine on Rent Service</option>
-                                        <option value='Burial / Cremation Service / Hearse Van Service'>Burial / Cremation Service / Hearse Van Service</option>
-                                        <option value='Buy Covid Essentials - Pulse Oximeter, Thermometer, Masks'>Buy Covid Essentials - Pulse Oximeter, Thermometer, Masks</option>
-                                        <option value='Doctor Tele Medical Consultation Service'>Doctor Tele Medical Consultation Service</option>
-                                        <option value='Food Delivery Service - Home Delivery For Covid Affected'>Food Delivery Service - Home Delivery For Covid Affected</option>
-                                        <option value='Free Food Delivery For Poor'>Free Food Delivery For Poor</option>
-                                        <option value='Personal Counselling and Motivation'>Personal Counselling and Motivation</option>
-                                        <option value='Physiotherapist Consultation'>Physiotherapist Consultation</option>
-                                        <option value='Vaccination - Guidance And Centers Availability Help'>Vaccination - Guidance And Centers Availability Help</option>
-
-                                        <option value='Other'>Other</option>
-
-                                </Form.Control>
-                            </Form.Group>
-                        </Col> 
+                        
                     </Row>
                     <Row>
                         <Col md={12}>
