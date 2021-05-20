@@ -181,6 +181,17 @@ class AllCases extends React.Component {
                                         <Dropdown.Item eventKey="7" onClick={()=>{this.onServiceChange('Oxygen Concentrator On Rent')}}>Oxygen Concentrator On Rent</Dropdown.Item>
                                         <Dropdown.Item eventKey="8" onClick={()=>{this.onServiceChange('Medicine')}}>Medicine</Dropdown.Item>
                                         <Dropdown.Item eventKey="9" onClick={()=>{this.onServiceChange('Nursing Care')}}>Nursing Care</Dropdown.Item>
+                                
+                                    <Dropdown.Item eventKey="10" onClick={()=>{this.onServiceChange('Bipap Machine on Rent Service')}}>Bipap Machine on Rent Service</Dropdown.Item>
+                                    <Dropdown.Item eventKey="11" onClick={()=>{this.onServiceChange('Burial / Cremation Service / Hearse Van Service')}}>Burial / Cremation Service / Hearse Van Service</Dropdown.Item>
+                                    <Dropdown.Item eventKey="12" onClick={()=>{this.onServiceChange('Buy Covid Essentials - Pulse Oximeter, Thermometer, Masks')}}>Buy Covid Essentials - Pulse Oximeter, Thermometer, Masks</Dropdown.Item>
+                                    <Dropdown.Item eventKey="13" onClick={()=>{this.onServiceChange('Doctor Tele Medical Consultation Service')}}>Doctor Tele Medical Consultation Service</Dropdown.Item>
+                                    <Dropdown.Item eventKey="14" onClick={()=>{this.onServiceChange('Food Delivery Service - Home Delivery For Covid Affected')}}>Food Delivery Service - Home Delivery For Covid Affected</Dropdown.Item>
+                                    <Dropdown.Item eventKey="15" onClick={()=>{this.onServiceChange('Free Food Delivery For Poor')}}>Free Food Delivery For Poor</Dropdown.Item>
+                                    <Dropdown.Item eventKey="16" onClick={()=>{this.onServiceChange('Personal Counselling and Motivation')}}>Personal Counselling and Motivation</Dropdown.Item>
+                                    <Dropdown.Item eventKey="17" onClick={()=>{this.onServiceChange('Physiotherapist Consultation')}}>Physiotherapist Consultation</Dropdown.Item>
+                                    <Dropdown.Item eventKey="18" onClick={()=>{this.onServiceChange('Vaccination - Guidance And Centers Availability Help')}}>Vaccination - Guidance And Centers Availability Help</Dropdown.Item>
+                                    <Dropdown.Item eventKey="18" onClick={()=>{this.onServiceChange('Other')}}>Other</Dropdown.Item>
                                 </DropdownButton>
                                 <DropdownButton
                                     as={ButtonGroup}
@@ -245,6 +256,17 @@ class AllCases extends React.Component {
                                         <Dropdown.Item eventKey="7" onClick={()=>{this.onServiceChange('Oxygen Concentrator On Rent')}}>Oxygen Concentrator On Rent</Dropdown.Item>
                                         <Dropdown.Item eventKey="8" onClick={()=>{this.onServiceChange('Medicine')}}>Medicine</Dropdown.Item>
                                         <Dropdown.Item eventKey="9" onClick={()=>{this.onServiceChange('Nursing Care')}}>Nursing Care</Dropdown.Item>
+                                        <Dropdown.Item eventKey="10" onClick={()=>{this.onServiceChange('Bipap Machine on Rent Service')}}>Bipap Machine on Rent Service</Dropdown.Item>
+                                    <Dropdown.Item eventKey="11" onClick={()=>{this.onServiceChange('Burial / Cremation Service / Hearse Van Service')}}>Burial / Cremation Service / Hearse Van Service</Dropdown.Item>
+                                    <Dropdown.Item eventKey="12" onClick={()=>{this.onServiceChange('Buy Covid Essentials - Pulse Oximeter, Thermometer, Masks')}}>Buy Covid Essentials - Pulse Oximeter, Thermometer, Masks</Dropdown.Item>
+                                    <Dropdown.Item eventKey="13" onClick={()=>{this.onServiceChange('Doctor Tele Medical Consultation Service')}}>Doctor Tele Medical Consultation Service</Dropdown.Item>
+                                    <Dropdown.Item eventKey="14" onClick={()=>{this.onServiceChange('Food Delivery Service - Home Delivery For Covid Affected')}}>Food Delivery Service - Home Delivery For Covid Affected</Dropdown.Item>
+                                    <Dropdown.Item eventKey="15" onClick={()=>{this.onServiceChange('Free Food Delivery For Poor')}}>Free Food Delivery For Poor</Dropdown.Item>
+                                    <Dropdown.Item eventKey="16" onClick={()=>{this.onServiceChange('Personal Counselling and Motivation')}}>Personal Counselling and Motivation</Dropdown.Item>
+                                    <Dropdown.Item eventKey="17" onClick={()=>{this.onServiceChange('Physiotherapist Consultation')}}>Physiotherapist Consultation</Dropdown.Item>
+                                    <Dropdown.Item eventKey="18" onClick={()=>{this.onServiceChange('Vaccination - Guidance And Centers Availability Help')}}>Vaccination - Guidance And Centers Availability Help</Dropdown.Item>
+                                    <Dropdown.Item eventKey="18" onClick={()=>{this.onServiceChange('Other')}}>Other</Dropdown.Item>
+                                
                                 </DropdownButton>
                                 <DropdownButton
                                     as={ButtonGroup}

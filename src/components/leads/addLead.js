@@ -373,6 +373,18 @@ class AddLead extends React.Component {
                                         <option value='Oxygen Concentrator On Rent'>Oxygen Concentrator On Rent</option>
                                         <option value='Medicine'>Medicine</option>
                                         <option value='Nursing Care'>Nursing Care</option>
+
+                                        <option value='Bipap Machine on Rent Service'>Bipap Machine on Rent Service</option>
+                                        <option value='Burial / Cremation Service / Hearse Van Service'>Burial / Cremation Service / Hearse Van Service</option>
+                                        <option value='Buy Covid Essentials - Pulse Oximeter, Thermometer, Masks'>Buy Covid Essentials - Pulse Oximeter, Thermometer, Masks</option>
+                                        <option value='Doctor Tele Medical Consultation Service'>Doctor Tele Medical Consultation Service</option>
+                                        <option value='Food Delivery Service - Home Delivery For Covid Affected'>Food Delivery Service - Home Delivery For Covid Affected</option>
+                                        <option value='Free Food Delivery For Poor'>Free Food Delivery For Poor</option>
+                                        <option value='Personal Counselling and Motivation'>Personal Counselling and Motivation</option>
+                                        <option value='Physiotherapist Consultation'>Physiotherapist Consultation</option>
+                                        <option value='Vaccination - Guidance And Centers Availability Help'>Vaccination - Guidance And Centers Availability Help</option>
+
+                                        <option value='Other'>Other</option>
                                 </Form.Control>
                             </Form.Group>
                     </Col>
