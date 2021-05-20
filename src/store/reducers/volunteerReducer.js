@@ -248,8 +248,8 @@ const VolunteerReducer = (state = initState,action) => {
 
         case 'ERROR_ASSIGNING_REQUEST':
         return {...state,errorAssigningRequest:true}
-        default:
-        return {...state}
+        
+        default:return {...state}
     }
 }
 
