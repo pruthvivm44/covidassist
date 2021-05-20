@@ -116,9 +116,12 @@ footer {
  .anchor{
    text-decoration: underline;
    font-size:25px;
+  color:#E9002F !important;
+
  }
  .link{
   text-decoration: underline;
   font-size:18px;
+  color:#E9002F !important;
 
  }

@@ -25,6 +25,7 @@ class Navibar extends React.Component {
                     <Nav.Link className="black hoverred" to={'/volunteer'} as={Link}>VOLUNTEER</Nav.Link>
                     }
                     <Nav.Link className="black hoverred" to={'/leads'} as={Link}>LEADS</Nav.Link>
+                    <Nav.Link className="black hoverred" to={'/resources'} as={Link}>RESOURCES</Nav.Link>
                    
                 </Navbar.Collapse>
             </Navbar>
