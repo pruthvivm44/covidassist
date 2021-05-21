@@ -44,13 +44,15 @@ class PatientForm extends React.Component {
             symptoms:[],
             spo2:'',
             regexp : /^[0-9\b]+$/,
-            stateData:''
+            stateData:'',
+            patternAlphabet : /^[A-Za-z]+$/
         }
     }
     onPatientNameChange = (e)=>{
-        this.setState({
-            patientName:e.target.value
-        });
+        let name = e.target.value;
+        if (name === '' || this.state.patternAlphabet.test(name)) {
+            this.setState({ patientName: name });
+        }
     }
     onSrfIdChange = (e)=>{
         this.setState({
@@ -105,9 +107,10 @@ class PatientForm extends React.Component {
         }
     }
     oncareTakeNameChange = (e)=>{
-        this.setState({
-            careTakerName:e.target.value
-        });
+        let name = e.target.value;
+        if (name === '' || this.state.patternAlphabet.test(name)) {
+            this.setState({ careTakerName: name });
+        }
     }
     onPriMobNoChange = (e)=>{
         let telephone = e.target.value;
@@ -318,9 +321,13 @@ class PatientForm extends React.Component {
         }
     }
     onChangeSpo2 = (e)=>{
-        this.setState({
-            spo2:e.target.value
-        });
+        if(e.target.value.length>3 || e.target.value>100){
+
+        }else{
+            this.setState({
+                spo2:e.target.value
+            });
+        }
     }
     submit = (e)=>{
         e.preventDefault();
@@ -586,7 +593,7 @@ class PatientForm extends React.Component {
                         <Col md={4}>
                             <Form.Group controlId="ptName">
                                 <Form.Label>Patient Name <span className="redColor">*</span></Form.Label>
-                                <Form.Control type="text" value={this.state.patientName} placeholder="Enter Patient Name" onChange={this.onPatientNameChange} />
+                                <Form.Control pattern={this.state.patternAlphabet} type="text" value={this.state.patientName} placeholder="Enter Patient Name" onChange={this.onPatientNameChange} />
                             </Form.Group>
                         </Col>
                         <Col md={4}>
@@ -617,6 +624,7 @@ class PatientForm extends React.Component {
                                     <option value="null">Choose...</option>
                                     <option value="+ve">+ ve</option>
                                     <option value="-ve">- ve</option>
+                                    <option value="Awaiting Result">Awaiting Result</option>
                                     <option value="Not Tested">Not yet Tested</option>
                                 </Form.Control>
                             </Form.Group>

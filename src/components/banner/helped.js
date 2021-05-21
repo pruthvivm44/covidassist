@@ -34,7 +34,7 @@ class Helped extends React.Component {
                                     </Col>
                                     <Col md="3" className="text-center">
                                         <p className="helpNumber">{this.props.statContent.statRecord.volunteersCount}</p>
-                                        <h4>Volunteer's</h4>
+                                        <h4>Volunteers</h4>
                                     </Col>
                                     <Col md="3" className="text-center">
                                         <p className="helpNumber">{this.props.statContent.statRecord.leadsCount}</p>
