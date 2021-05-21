@@ -18,6 +18,11 @@ class Resources extends React.Component {
                     body:[{title:'Volunteer Website',content:['A comprehensive list of COVID resources across India. Made by Employee of Microsoft .'],link:[],phno:[]}]
                 },
                 { 
+                    title : {resourceTitle:'India Covid Resources',link:'https://indiacovidresources.in/'},
+                    titleContent:[{title:'',link:[],phno:[]}],
+                    body:[{title:'Volunteer Website Powered by 200+ volunteers',content:['Powered by 200+ volunteers to provide verified covid resources pan India. DM us at @TheProductFolks, @CreatorsOfProd, or @kavirkaycee'],link:[],phno:[]}]
+                },
+                { 
                     title : {resourceTitle:'WORKBOOK COVID Care Resources India',link:'https://public.tableau.com/views/CovidHelp/Search?:language=en-GB&:display_count=y&publish=yes&:origin=viz_share_link&:showVizHome=no'},
                     titleContent:[{title:'',link:[],phno:[]}],
                     body:[{title:'Volunteer Website',content:['Developed by Women alumini of IIMs'],link:[],phno:[]}]
