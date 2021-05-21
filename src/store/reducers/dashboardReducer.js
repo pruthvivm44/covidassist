@@ -15,7 +15,7 @@ const DashboardReducer = (state = initState,action) => {
         return {...state,loading:true}
 
         case 'ERROR_GETTING_STATS':
-        return {...state,loading:false,error:'Error getting stats Plese try again later'}
+        return {...state,loading:false,error:'Error getting stats Please try again later',gotStats:true}
 
         default:return {...state}
     }
