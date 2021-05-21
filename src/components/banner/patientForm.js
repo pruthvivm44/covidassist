@@ -783,8 +783,8 @@ class PatientForm extends React.Component {
                     <Row>
                         <Col md={4}>
                             <Form.Group controlId="landMark">
-                                <Form.Label>Land Mark <span className="redColor">*</span></Form.Label>
-                                <Form.Control type="text" placeholder="Land Mark ( Optional )" onChange={this.onLandMarkChange} />
+                                <Form.Label>Landmark <span className="redColor">*</span></Form.Label>
+                                <Form.Control type="text" placeholder="Landmark ( Optional )" onChange={this.onLandMarkChange} />
                             </Form.Group>
                         </Col>
                         <Col md={4}>

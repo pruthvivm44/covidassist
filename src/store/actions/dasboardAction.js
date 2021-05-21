@@ -27,7 +27,7 @@ export const getDasboardStats = (credentials) =>{
             .catch(function (error) {
                 //handle error
                 if(error.response){
-                    if(error.response.status===400){
+                    if(error.response.status===404 || error.response.status===400){
                         dispatch({type:'ERROR_GETTING_STATS'})
                     }else{
                         dispatch({type:'ERROR_GETTING_STATS',error});
